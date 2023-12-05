@@ -1,81 +1,78 @@
 import React from "react";
-import { Box, HStack, Icon, Input, ScrollView, Text, View, VStack } from 'native-base'
-import { MaterialCommunityIcons, AntDesign } from '@expo/vector-icons';
+import { View, ScrollView } from "react-native";
+import { Text, TextInput } from "react-native-paper";
 import styles from "./style";
-import colors from '../../constants/colours';
+import colors from "../../constants/colours";
 import Accordion from "../../components/Accordion";
 import Header from "../../components/Header";
-import {Global, MessageText1, TableDocument} from 'iconsax-react-native'
-
+import { Global, MessageText1, TableDocument } from "iconsax-react-native";
 
 const IconItem = (props) => {
-    return (
-        <HStack style={styles.headerItem}>
-            <Box style={styles.iconBox}>
-                <Icon
-                    as={props.iconType}
-                    color={colors.primary}
-                    size='md'
-                />
-            </Box>
-            <Text style={styles.textBox}>{props.text}</Text>
-        </HStack>
-    )
-}
+  return (
+    <View style={styles.headerItem}>
+      <View style={styles.iconBox}>{props.iconType}</View>
+      <Text style={styles.textBox}>{props.text}</Text>
+    </View>
+  );
+};
 
 const FAQ = () => {
-    const [searchedValue, setSearchedValue] = React.useState('');
+  const [searchedValue, setSearchedValue] = React.useState("");
 
-    const handleChange = (text) => {
-        setSearchedValue(text)
-    }
+  const handleChange = (text) => {
+    setSearchedValue(text);
+  };
 
-    return (
-        <View flex={1} style={styles.container}>
-            <Header bg={'white'} title={'Contactez l\'Assistance'} />
-            <VStack style={styles.headerItemGroup}>
-                <Box mb={5}>
-                    <Text style={styles.headerText}>Vous n'avez pas trouvé la réponse que vous cherchiez? Contactez notre centre d'assistance!</Text>
-                </Box>
-                <Box mb={2}>
-                    <IconItem
-                        iconName='web'
-                        iconType={<Global />}
-                        text='Aller sur notre site web' />
-                    <IconItem
-                        iconName='message1'
-                        iconType={<MessageText1 />}
-                        text='Envoyez-nous un e-mail' />
-                    <IconItem
-                        iconName='filetext1'
-                        iconType={<TableDocument />}
-                        text="Conditions d'utilisation" />
-                </Box>
-
-                <Box>
-                    <Input
-                        value={searchedValue}
-                        size={'md'}
-                        placeholder="Rechercher"
-                        w="100%"
-                        onChangeText={handleChange}
-                        height={10}
-                    />
-                </Box>
-            </VStack>
-            <ScrollView showsVerticalScrollIndicator={false} p={5} flex={1}>
-                <Accordion />
-                <Accordion />
-                <Accordion />
-                <Accordion />
-                <Accordion />
-                <Accordion />
-                <Accordion />
-                <Accordion />
-                <Accordion />
-            </ScrollView>
+  return (
+    <View flex={1} style={styles.container}>
+      <Header bg={"white"} title={"Contactez l'Assistance"} />
+      <View style={styles.headerItemGroup}>
+        <View >
+          <Text style={styles.headerText}>
+            Vous n'avez pas trouvé la réponse que vous cherchiez? Contactez
+            notre centre d'assistance!
+          </Text>
         </View>
-    )
-}
+        <View mb={2}>
+          <IconItem
+            iconType={<Global color={colors.primary}/>}
+            text="Aller sur notre site web"
+          />
+          <IconItem
+            iconType={<MessageText1 color={colors.primary}/>}
+            text="Envoyez-nous un e-mail"
+          />
+          <IconItem
+            iconType={<TableDocument color={colors.primary}/>}
+            text="Conditions d'utilisation"
+          />
+        </View>
+
+          <TextInput
+            value={searchedValue}
+            placeholder="Rechercher"
+            mode="outlined"
+            outlineStyle={{borderRadius:15, borderWidth:0}}
+
+            style={{height:45, backgroundColor:colors.desable}}
+            onChangeText={handleChange}
+          />
+      </View>
+      <ScrollView showsVerticalScrollIndicator={false} style={{padding:10}} flex={1}>
+        <Accordion
+          title={"Comment changer son mot de passe"}
+          description={
+            "Pour changer votre mot de passe , suivez les étape suivante : 1. Allez sur parametre > Modifier mode passe > rempliseer le formulaire"
+          }
+        />
+        <Accordion title={"Comment modifer son profile"} />
+        <Accordion title={"Comment reporter un Rendez-vous"} />
+        <Accordion title={"Comment annuler un Rendez-vous"} />
+        <Accordion title={"Comment recherher un spécialiste"} />
+        <Accordion title={"Comment activer les notification"} />
+      </ScrollView>
+    </View>
+  );
+};
 
 export default FAQ;

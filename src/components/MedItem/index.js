@@ -1,12 +1,12 @@
-
 import React from "react";
-import { Box, HStack, Icon, Pressable, Text } from "native-base";
-import { FontAwesome, Fontisto, Entypo } from '@expo/vector-icons';
 import styles from './style';
 import colors from "../../constants/colours";
+import { View, Pressable } from "react-native";
+import { Text } from "react-native-paper";
 import { useDispatch, useSelector } from "react-redux";
 import { setRDVForm } from "../../redux/RDV/actions";
 import { setIdCentre } from "../../redux/commons/action";
+import { Hospital, Location, MoneySend } from "iconsax-react-native";
 
 const MedItem = ({ value, infosPraticien, handleChange, index, trigger, infosClinique }) => {
     const dispatch = useDispatch()
@@ -29,26 +29,25 @@ const MedItem = ({ value, infosPraticien, handleChange, index, trigger, infosCli
 
     return (
         <Pressable onPress={handlePress}>
-            <Box
-                ml={index != 0 ? 3 : 0}
+            <View
                 style={{
                     ...styles.medBox,
                     backgroundColor: isSelected ? colors.trans_primary : 'transparent',
-                    borderColor: isSelected ? colors.trans_primary : colors.text_grey_hint,
+                    borderColor: isSelected ? colors.trans_primary : colors.text_grey_hint, gap:5
                 }}>
-                <HStack alignItems={'center'}>
-                    <Icon color={colors.primary} as={Fontisto} name='doctor' />
+                <View style={styles.hStack}>
+                    <Hospital color={colors.black} />
                     <Text ml={1} style={styles.medName}>{infosPraticien ? "Dr " + infosPraticien.name : infosClinique.label}</Text>
-                </HStack>
-                <HStack mt={1} alignItems={'center'}>
-                    <Icon color={colors.primary} as={FontAwesome} name='hospital-o' />
+                </View>
+                <View style={styles.hStack}>
+                <Location  color={colors.black} />
                     <Text ml={1} style={styles.medCenter}>{infosPraticien ? infosPraticien.email : infosClinique.ville + " - " + infosClinique?.region}</Text>
-                </HStack>
-                <HStack mt={1} alignItems={'center'}>
-                    <Icon color={colors.secondary} as={Entypo} name='wallet' />
-                    <Text ml={1} style={styles.medTax}>{infosPraticien ? infosPraticien.telephone : "5000 fcfa"}</Text>
-                </HStack>
-            </Box>
+                </View>
+                <View style={styles.hStack}>
+                <MoneySend color={colors.yellow}/>
+                    <Text ml={1} style={styles.medTax}>{infosPraticien ? infosPraticien.telephone : "500000 fcfa"}</Text>
+                </View>
+            </View>
         </Pressable >
     )
 }

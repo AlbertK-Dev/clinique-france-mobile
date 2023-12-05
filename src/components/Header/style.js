@@ -5,9 +5,11 @@ export const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-        padding: 5,
+        padding: 10,
+        height:55
     },
     title: {
-        fontSize: 18,
+        fontSize: 20,
+        fontWeight:"600"
     }
 })

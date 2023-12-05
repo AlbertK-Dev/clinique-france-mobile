@@ -1,11 +1,12 @@
 import { View, Text } from 'react-native'
 import React from 'react'
-import { HStack, VStack } from 'native-base'
+import { styles } from './style'
+import { Surface } from 'react-native-paper'
 
 const TransactionComp = () => {
     return (
-        <VStack style={{ height: "100%", width: "100%", padding: 5 }} justifyContent={"space-around"}>
-            <HStack justifyContent={"space-between"}>
+        <Surface elevation={1} style={styles.surface}>
+            <View style={styles.hstackBox}>
                 <Text style={{ fontSize: 16 }}>Paiement effectué</Text>
                 <Text
                     style={{
@@ -15,7 +16,7 @@ const TransactionComp = () => {
                         padding: 3,
                         fontSize: 12
                     }}>Orange Money</Text>
-            </HStack>
+            </View>
             <Text
                 style={{
                     fontSize: 14,
@@ -23,7 +24,7 @@ const TransactionComp = () => {
                 }}>
                 Vous venez d’effectué un paiement d’un montant de 1500 Fcfa.
             </Text>
-            <HStack justifyContent={"space-between"}>
+            <View style={styles.hstackBox}>
                 <Text
                     style={{
                         color: "#04C96A",
@@ -31,8 +32,8 @@ const TransactionComp = () => {
                     }}
                 >Succes</Text>
                 <Text style={{ fontSize: 12, color: "#818181" }}>12 Fevrier 2023</Text>
-            </HStack>
-        </VStack>
+            </View>
+        </Surface>
     )
 }
 

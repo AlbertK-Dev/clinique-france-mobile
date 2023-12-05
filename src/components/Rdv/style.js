@@ -13,6 +13,8 @@ const styles = StyleSheet.create({
         backgroundColor: colors.white,
         borderColor: colors.primary,
         borderWidth: 1.5,
+        alignItems:"center",
+        justifyContent:'center'
     },
     reportBtn: {
         backgroundColor: colors.trans_primary,

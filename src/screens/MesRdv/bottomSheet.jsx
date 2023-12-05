@@ -1,6 +1,6 @@
-import { Actionsheet, Text } from "native-base";
 import { TouchableOpacity, View } from "react-native";
 import colors from "../../constants/colours";
+import { Text } from "react-native-paper";
 import styles from "./style";
 import { memo } from "react";
 
@@ -24,7 +24,11 @@ const BottomSheet = (props) => {
   };
 
   return (
-    <Actionsheet isOpen={isOpen} onClose={() => close(false)}>
+
+    <View>
+        <Text>filtre</Text>        
+             
+    {/*<Actionsheet isOpen={isOpen} onClose={() => close(false)}>
       <Actionsheet.Content>
         <Actionsheet.Item backgroundColor={'transparent'}>
           <Text style={styles.title} fontWeight='600'>Options de tri</Text>
@@ -168,7 +172,8 @@ const BottomSheet = (props) => {
           </View>
         </Actionsheet.Item>
       </Actionsheet.Content>
-    </Actionsheet>
+              </Actionsheet>*/}
+               </View>
   );
 };
 

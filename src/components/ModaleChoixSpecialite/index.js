@@ -1,10 +1,9 @@
 import { View, Pressable } from "react-native";
 import React, { useState } from "react";
-import { Dialog, RadioButton } from "react-native-paper";
-import { Box, Button, Icon, Text } from "native-base";
+import { Dialog, RadioButton , Button, Text} from "react-native-paper";
 import styles from "./style";
-import { AntDesign } from "@expo/vector-icons";
 import colors from "../../constants/colours";
+import { CloseCircle } from "iconsax-react-native";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setProfessionForRdv,
@@ -35,27 +34,18 @@ export default function ModaleChoixProfession({ navigation, onClose }) {
         borderRadius: 5,
         backgroundColor: colors.white,
       }}
-      // onDismiss={hideDialog}
     >
       <Dialog.Content style={{ ...styles.dialogContent }}>
-        <Box style={{ ...styles.boxCloseIconDialogContainer }}>
-          <Box></Box>
-          <Box style={{ ...styles.boxCloseIconDialog }}>
-            <Pressable
+          <View style={{alignItems:"flex-end", marginTop:-10, marginBottom:8, marginRight:-16}}>
+            <CloseCircle
               onPress={() => {
                 navigation.goBack();
                 onClose();
               }}
-            >
-              <Icon
-                as={AntDesign}
-                name="close"
-                size={"sm"}
-                color={colors.black}
-              />
-            </Pressable>
-          </Box>
-        </Box>
+              size={26}
+              color={colors.black}
+            />
+          </View>
         <Text
           variant="bodyMedium"
           textAlign={"center"}
@@ -64,7 +54,7 @@ export default function ModaleChoixProfession({ navigation, onClose }) {
         >
           Choisissez une profession pour votre RDV
         </Text>
-        <Box marginBottom={10}>
+        <View marginBottom={10}>
           <View style={{ ...styles.radioContainer }}>
             <View style={{ width: "100%" }}>
               <View
@@ -123,11 +113,13 @@ export default function ModaleChoixProfession({ navigation, onClose }) {
               </View>
             </View>
           </View>
-        </Box>
-        <Box>
+        </View>
+        <View>
           <Button
-            width={"100%"}
+            mode="contained"
             disabled={professionLoading}
+            buttonColor={colors.primary}
+            style={{marginTop:15}}
             onPress={() => {
               setVisible(false);
               dispatch(setProfessionForRdv(isSpecialiste));
@@ -155,11 +147,9 @@ export default function ModaleChoixProfession({ navigation, onClose }) {
                 );
             }}
           >
-            <Text color={colors.white} style={styles.btnLabel}>
               Continuer
-            </Text>
           </Button>
-        </Box>
+        </View>
       </Dialog.Content>
     </Dialog>
   );

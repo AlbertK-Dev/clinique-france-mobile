@@ -7,7 +7,10 @@ const styles = {
 
     header: {
         alignItems: 'center',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        display:"flex",
+        flexDirection:'row',
+        alignItems:'center'
     },
 
     headerTitle: {
@@ -28,6 +31,18 @@ const styles = {
 
     titleBox: {
         alignItems: 'center',
+        display:'flex',
+        flexDirection:'row',
+        gap:8,
+        marginBottom:5
+    },
+
+
+    hstackBox: {
+        alignItems: 'center',
+        display:'flex',
+        flexDirection:'row',
+        gap:5
     },
 
     number: {
@@ -79,9 +94,9 @@ const styles = {
     },
 
     btn: {
-        height: 50,
         width: '100%',
-        borderRadius: 10,
+        borderRadius: 15,
+        marginTop:10,
         borderColor: colors.primary,
     },
 

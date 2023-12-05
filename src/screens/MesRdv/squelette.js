@@ -1,19 +1,13 @@
 import React from "react";
-import {
-  Skeleton
-} from "native-base";
+import { ActivityIndicator, Text } from "react-native-paper";
+import colors from "../../constants/colours";
+import { View } from "react-native";
 
-export const Skelette = ({ last }) => {
+export const Skelette = () => {
   return (
-    <Skeleton
-      style={{
-        height: last ? 100 : 180,
-        width: "100%",
-        padding: 5,
-        marginTop: 0,
-        borderRadius: 30,
-        alignItems: "center",
-        // backgroundColor:'white'
-      }}
-    />);
+    <View style={{display:"flex",gap:5}}>
+      <ActivityIndicator size={30} color={colors.primary} animating={true}/>
+      <Text>Veuillez patienter</Text>
+    </View>
+  )
 };

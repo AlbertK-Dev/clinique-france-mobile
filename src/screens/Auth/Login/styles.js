@@ -1,4 +1,3 @@
-import { Center } from 'native-base';
 import { StyleSheet } from 'react-native';
 import colors from '../../../constants/colours';
 
@@ -10,6 +9,15 @@ const styles = StyleSheet.create({
   connexionText: {
     fontWeight: "700",
     fontSize: 24,
+  },
+
+  input: {
+    fontSize: 16,
+    width: "80%",
+    height: 43,
+    marginVertical: 5,
+    backgroundColor: colors.desable,
+    borderTopRightRadius: 80,
   },
 
   logoBox: {
@@ -126,7 +134,52 @@ const styles = StyleSheet.create({
     height: 35,
     width: 35,
     marginLeft: 8
-  }
+  },
+
+  warninBox:{
+    backgroundColor: colors.transp_warning,
+    borderRadius: 5,
+    padding: 8,
+    display:'flex',
+    flexDirection:"row",
+    alignItems:'center'
+  },
+
+  warningText:{
+    fontSize: 12,
+    color: colors.danger,
+    left:5
+  },
+
+  cguBox:{
+    display:'flex',
+    flexDirection:"row",
+    alignItems:'center',
+    marginTop:8
+  },
+
+  viewInput: {
+    display: "flex",
+    flexDirection: "row",
+    paddingLeft: 10,
+    alignItems: "center",
+    justifyItems: "center",
+    backgroundColor: colors.desable,
+    borderRadius:50,
+    marginTop:10,
+    marginBottom:5
+  },
+
+  viewBoxIcon:{
+    display:'flex',
+    alignItems: "center",
+    justifyItems: "center",
+    justifyContent:'center',
+    height:35,
+    width:35,
+    backgroundColor:colors.white,
+    borderRadius:50
+  },
 });
 
 

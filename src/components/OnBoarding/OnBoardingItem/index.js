@@ -1,61 +1,56 @@
-import { View, StyleSheet, useWindowDimensions, Image } from 'react-native'
-import { Text } from 'native-base';
-import React from 'react'
-import colors from '../../../constants/colours';
-import Doctor from '../../../assets/img/Doctor_Two_Color__2__1.png'
-import { Center, VStack } from 'native-base';
+import { View, StyleSheet, useWindowDimensions, Image } from "react-native";
+import React from "react";
+import colors from "../../../constants/colours";
+import { Text } from "react-native-paper";
 
-export default function OnBoardingItem({ item, scrollX }) {
+export default function OnBoardingItem({ item, scrollX, ...props }) {
+  const { width } = useWindowDimensions();
 
-    const { width } = useWindowDimensions();
-
-    return (
-        <VStack display={'flex'} justifyContent={'center'} style={[styles.constainer, { width, height: 400 }]}>
-            <Center>
-            <View style={styles.second}>
-                <Image source={Doctor} style={{ height: 200, width: 200 }} />
-            </View>
-            <View style={styles.third}>
-                <VStack alignItems={'center'} style={{ width: "90%", marginLeft: 20 }}>
-                    <Text style={{ ...styles.greetEn, fontSize: 22, marginBottom: 10 }}>
-                        Obtenez plus facilement un rendez-vous chez le médecin
-                    </Text>
-                    <Text style={{ ...styles.greetEn, fontSize: 16, fontWeight: "normal" }}>
-                        Nous mettons à votre disposition des médecins généralistes et spécialistes qualifiés exercant sur tout le territoire
-                    </Text>
-                </VStack>
-                
-            </View>
-            </Center>
-        </VStack>
-    )
+  return (
+    <View style={{ width, padding: 10}}>
+      <View style={{padding:15, marginTop:15}}>
+      <Text style={styles.greetfr}>{props.titre}</Text>
+      </View>
+      <View style={styles.second}>
+        <Image
+          source={props.image}
+          resizeMode="center"
+          style={{ width: "100%", height: 230 }}
+        />
+      </View>
+      <View>
+        <Text tex style={{ ...styles.greetEn, fontSize: 20 }}>{props.title}</Text>
+        <Text style={styles.description}>
+          {props.description}
+        </Text>
+      </View>
+    </View>
+  );
 }
 
 export const styles = StyleSheet.create({
-    constainer: {
-        backgroundColor: colors.primary,
-        // height: 550
-    },
-    first: {
-        flex: 0,
-    },
-    second: {
-        display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    third: {
-        display: 'flex',
-    },
-    greetfr: {
-        fontSize: 32,
-        fontWeight: 'bold',
-        color: colors.yellow,
-    },
-    greetEn: {
-        fontSize: 32,
-        fontWeight: 'bold',
-        color: "white",
-    }
-})
+  second: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 20,
+  },
+  greetfr: {
+    fontSize: 22,
+    fontWeight: "bold",
+    color: colors.yellow,
+  },
+  greetEn: {
+    fontSize: 22,
+    fontWeight: "bold",
+    color: colors.black_gray,
+    textAlign: 'center'
+  },
+  description: {
+    textAlign: 'center',
+    fontSize: 16,
+    color: colors.black_gray,
+    marginTop: 10
+  }
+});

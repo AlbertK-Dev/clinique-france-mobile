@@ -17,12 +17,15 @@ const styles = StyleSheet.create({
     appoinmentsBox: {
         backgroundColor: colors.white,
         padding: 10,
-        borderRadius: 10
+        borderRadius: 10,
+        marginTop:2,
+        gap:3
     },
     consignes: {
         backgroundColor: colors.trans_primary,
         padding: 10,
-        borderRadius: 10
+        borderRadius: 10,
+        marginTop:10
     },
     message: {
         textAlign: 'center',
@@ -33,6 +36,22 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         padding: 10,
         alignItems: "center",
+    },
+
+    hStackView:{
+        display:"flex",
+        flexDirection:"row",
+        justifyContent:'space-between'
+    },
+    textColor:{
+        color:colors.primary,
+        fontSize:16
+    },
+    iconTextConsigne:{
+        display: "flex", 
+        flexDirection: "row", 
+        alignContent:"center",
+        gap:5
     }
 })
 

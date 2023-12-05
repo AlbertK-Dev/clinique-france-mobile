@@ -1,10 +1,7 @@
 import React from "react";
-import { Modal, View, Text, ActivityIndicator } from "react-native";
-import { Center, } from "native-base";
+import { Modal, View, Text } from "react-native";
 import colors from "../../constants/colours";
 import { AntDesign } from "@expo/vector-icons";
-import styles from "./styles";
-import { Divider } from "react-native-paper";
 
 const ModalPaySuccess = ({ isVisible, onClose, isLoader, title }) => {
   return (
@@ -30,9 +27,9 @@ const ModalPaySuccess = ({ isVisible, onClose, isLoader, title }) => {
             width: "80%",
           }}
         >
-          <Center marginBottom={5}>
+          <View style={{alignItems:"center", marginBottom:5}}>
             <AntDesign name="checkcircle" size={60} color={colors.yellow} />
-          </Center>
+          </View>
           <Text
             style={{
               color: colors.white,

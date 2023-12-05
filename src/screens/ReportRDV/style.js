@@ -51,6 +51,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginBottom: 10,
   },
+
+  hstackBox: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems:'center'
+  },
   dropDownIcon: {
     height: 20,
     width: 20,
@@ -127,6 +133,7 @@ const styles = StyleSheet.create({
     width: "100%",
     display: "flex",
     marginBottom: 25,
+    marginTop:20
   },
 });
 

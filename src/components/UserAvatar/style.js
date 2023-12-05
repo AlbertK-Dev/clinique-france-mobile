@@ -19,5 +19,12 @@ export const styles = StyleSheet.create({
     image: {
         width: 20,
         height: 30
+    },
+
+    avatarBox:{
+        alignItems:"center",
+        display:'flex',
+        flexDirection:'row', 
+        gap:10
     }
 })

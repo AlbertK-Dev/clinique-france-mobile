@@ -5,14 +5,11 @@ import Notifications from "../screens/Notifications";
 import Profile from "../screens/Profile";
 import MonProfile2 from "../screens/MonProfile/index2";
 import MakeAppointment from "../screens/MakeAppointment";
-import { createStackNavigator } from "@react-navigation/stack";
 import ContainerBottom from "./ContainerBottom";
 import Transaction from "../screens/Transactions";
 import Payment from "../screens/Payment";
 import Parametres from "../screens/Parametres";
 import AboutUs from "../screens/AboutUs";
-import AppointmentDetails from "../screens/AppointmentDetails";
-import { ReportRDV } from "../screens/ReportRDV";
 import RoadMap from "../screens/GoogleMap";
 import { GlobalSearch } from "../screens/GlobalSearch";
 import { createSharedElementStackNavigator } from "react-navigation-shared-element";
@@ -20,25 +17,24 @@ import Policy from "../screens/ListeCguAndPolice/policy";
 import CGU from "../screens/ListeCguAndPolice/cgu";
 import Licenses from "../screens/ListeCguAndPolice/licenses";
 import Success from "../screens/Success";
-import SanteAstucesComponent from "../screens/AstuceSanté";
 import { DetailsPraticien } from "../screens/DetailsPraticiens";
-import AllPraticiens from "../components/AllPraticiens";
 import { useSocket } from "../socket";
+import { useDispatch, useSelector } from "react-redux";
+import { saveSocketNotifications } from "../redux/notifications/actions";
 
 const Stack = createSharedElementStackNavigator();
 
 const ContainerStack = () => {
+  const dispatch = useDispatch();
+  const userInfos = useSelector((state) => state.UserReducer.userInfos);
   const socket = useSocket();
   useEffect(() => {
+    const { user } = userInfos;
     socket.on("connected", (data) => {
-      console.log("connectatared: ", data);
-      socket.emit("setUserId", "je suis le user conf");
+      socket.emit("setUserId", user._id);
     });
-
-    socket.on("saved", (d) => console.log(d));
-
-    socket.on("notification", () => {
-      console.log("notification");
+    socket.on("notification", (notification) => {
+      dispatch(saveSocketNotifications(notification));
     });
 
     return () => {
@@ -79,11 +75,6 @@ const ContainerStack = () => {
       <Stack.Screen name={SCREENS.POLICY} component={Policy} />
       <Stack.Screen name={SCREENS.SUCCESS} component={Success} />
       <Stack.Screen name={SCREENS.LICENSES} component={Licenses} />
-      <Stack.Screen name={SCREENS.ALLPRATICIENTS} component={AllPraticiens} />
-      <Stack.Screen
-        name={SCREENS.ASTUCESANTE}
-        component={SanteAstucesComponent}
-      />
       <Stack.Screen
         name={SCREENS.DETAILS_PRATICIEN}
         component={DetailsPraticien}

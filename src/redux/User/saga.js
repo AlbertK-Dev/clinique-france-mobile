@@ -21,6 +21,7 @@ import { GET_ALL_PRATICIENS } from "../Praticiens/types";
 
 const _openMapKey = "5b3ce3597851110001cf624891231ecc67bc4e35a9f4b4a35b6a1f10";
 
+
 /**
  * @description user sign up.
  */
@@ -152,21 +153,18 @@ function* authLocalSignIn() {
 
   try {
     const access_token = yield AsyncStorage.getItem("access_token");
-    console.log(access_token);
     if (!access_token) {
       yield put({ type: types.LOCAL_AUTH_FAILED, payload: "" });
       return;
     }
 
     const result = yield postUnauthRequest(url, { token: access_token });
-    console.log(result);
     if (!result.success) {
       yield put({ type: types.LOCAL_AUTH_FAILED, payload: result.message });
       return;
     }
 
     const userInfos = yield AsyncStorage.getItem("userInfos");
-
     yield put({
       type: types.LOCAL_AUTH_SUCCESS,
       payload: JSON.parse(userInfos),
@@ -187,6 +185,7 @@ function* authLogout() {
     yield AsyncStorage.removeItem("userInfos");
     //yield AsyncStorage.clear()
     yield put({ type: "CLEAR_ALL_RDV" });
+    yield put({ type: "CLEAR_ALL_NOTIFICATIONS" });
     RootNavigation.navigate(SCREENS.LOGIN, { refresh: true });
   } catch (error) {
     yield put({ type: types.LOGOUT_REQUEST, payload: error });
@@ -195,7 +194,6 @@ function* authLogout() {
 
 function* processVerifCode({ data }) {
   const url = BASE_URL + "/ext_users/process_verif_code/";
-  console.log(data);
   const payload =
     data?.register === true
       ? {

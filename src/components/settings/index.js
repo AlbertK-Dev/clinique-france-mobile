@@ -1,6 +1,5 @@
-import { View } from 'native-base'
 import React from 'react'
-import { Image, Text } from 'react-native'
+import { Image, Text, View } from 'react-native'
 import user from "../../assets/img/user.png"
 import { styles } from './style'
 import right from "../../assets/img/right-chevron.png"

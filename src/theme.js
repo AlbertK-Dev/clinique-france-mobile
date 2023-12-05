@@ -1,6 +1,5 @@
-import { extendTheme } from 'native-base';
 
-const theme = extendTheme({
+const theme = {
   colors: {
     danger: {
       300: "rgba(201, 22, 4, 0.2)",
@@ -47,6 +46,6 @@ const theme = extendTheme({
     mono: 'Poppins'
   },
 }
-);
+;
 
 export default theme;

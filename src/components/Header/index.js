@@ -1,24 +1,24 @@
-import { useNavigation } from '@react-navigation/native'
-import { View, Icon, Text, IconButton } from 'native-base'
-import React from 'react'
-import { TouchableOpacity } from 'react-native-gesture-handler'
-import { styles } from './style'
-import { MaterialIcons } from '@expo/vector-icons';
-import colors from '../../constants/colours'
-import { ArrowLeft } from 'iconsax-react-native'
+import { useNavigation } from "@react-navigation/native";
+import { View } from "react-native";
+import React from "react";
+import { styles } from "./style";
+import colors from "../../constants/colours";
+import { ArrowLeft } from "iconsax-react-native";
+import { Surface, Text } from "react-native-paper";
 
 export default function Header({ title, bg }) {
-    const navigation = useNavigation();
-    return (
-        <View style={{ ...styles.constainer, backgroundColor: bg ?? undefined }}>
-            <IconButton
-                _icon={{ size: "sm" }}
-                onPress={() => navigation.goBack()}
-                icon={<Icon color={colors.black} as={<ArrowLeft />} style={styles.image} />}
-            />
-            <View justifyContent={'center'} alignItems={'center'} alignContent={'center'} width={'80%'}>
-                <Text style={styles.title}>{title}</Text>
-            </View>
-        </View>
-    )
+  const navigation = useNavigation();
+  return (
+    <Surface elevation={3} style={{ ...styles.constainer, backgroundColor: bg ?? colors.white }}>
+        <ArrowLeft size={25} color={colors.primary} onPress={()=>navigation.goBack()}/>
+      <View
+        justifyContent={"center"}
+        alignItems={"center"}
+        alignContent={"center"}
+        width={"80%"}
+      >
+        <Text style={styles.title}>{title}</Text>
+      </View>
+    </Surface>
+  );
 }

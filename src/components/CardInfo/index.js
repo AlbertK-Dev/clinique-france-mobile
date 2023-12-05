@@ -1,47 +1,52 @@
-import { Center, HStack, Text, VStack } from "native-base"
 import { InfoCircle } from "iconsax-react-native";
 import styles from "./style";
+import { Text } from "react-native-paper";
 import colors from "../../constants/colours";
+import { View } from "react-native";
 
 const CardInfo = (props) => {
-    return (
-        <VStack space={2}>
-            <Text style={styles.sectionTitle}>Informations sur le rendez-vous</Text>
-            <VStack space={2} style={styles.appoinmentsBox} mt={1}>
-                <HStack justifyContent={'space-between'}>
-                    <Text color={'primary.500'}>{props.lieu}</Text>
-                    <Text color={'primary.500'}>{props.status}</Text>
-                </HStack>
+  return (
+    <View style={{ padding: 2 }}>
+      <Text style={styles.sectionTitle}>Informations sur le rendez-vous</Text>
+      <View style={styles.appoinmentsBox}>
+        <View style={styles.hStackView}>
+          <Text style={styles.textColor}>{props.lieu}</Text>
+          <Text style={styles.textColor}>{props.status}</Text>
+        </View>
 
-                <VStack>
-                    <Text style={styles.medName}>{props.patient}</Text>
-                    <Text style={styles.label}>{props.infos}</Text>
-                </VStack>
+        <View style={{ marginTop: 3 }}>
+          <Text style={styles.medName}>{props.patient}</Text>
+          <Text style={styles.label}>{props.infos}</Text>
+        </View>
 
-                <VStack>
-                    <Text style={styles.label}>Motif du rendez-vous:</Text>
-                    <Text style={styles.label}>{props.motif}</Text>
-                </VStack>
+        <View style={{ marginTop: 5 }}>
+          <Text style={styles.label}>Motif du rendez-vous:</Text>
+          <Text style={styles.label}>{props.motif}</Text>
+        </View>
 
-                <VStack space={2} style={styles.consignes}>
-                    <HStack space={2} alignItems={"center"}>
-                        <InfoCircle color={colors.primary} size={20}/>
-                        <Text color={"primary.500"} fontWeight={500}>Consignes</Text>
-                    </HStack>
-                    <VStack space={1}>
-                        <Text>- Lorem ipsum dolor sit amet</Text>
-                        <Text>- Lorem ipsum dolor sit amet</Text>
-                        <Text>- Lorem ipsum dolor sit amet</Text>
-                    </VStack>
-                </VStack>
+        <View style={styles.consignes}>
+          <View style={styles.iconTextConsigne}>
+            <InfoCircle color={colors.primary} size={20} />
+            <Text style={{...styles.textColor}}>
+              Consignes
+            </Text>
+          </View>
+          <View style={{padding:2, gap:5}}>
+            <Text>- Lorem ipsum dolor sit amet</Text>
+            <Text>- Lorem ipsum dolor sit amet</Text>
+            <Text>- Lorem ipsum dolor sit amet</Text>
+          </View>
+        </View>
 
-                <Center mt={2}>
-                    <Text style={styles.message}>Rendez-vous fixé au {props.date}</Text>
-                    <Text color={"primary.500"}>Vous serez prévenu 30 minutes à l'avance.</Text>
-                </Center>
-            </VStack>
-        </VStack>
-    )
-}
+        <View style={{marginTop:5}}>
+          <Text style={styles.message}>Rendez-vous fixé au {props.date}</Text>
+          <Text style={{...styles.textColor, textAlign:'center', marginTop:5}}>
+            Vous serez prévenu 30 minutes à l'avance.
+          </Text>
+        </View>
+      </View>
+    </View>
+  );
+};
 
-export default CardInfo
+export default CardInfo;

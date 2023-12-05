@@ -12,7 +12,7 @@ i18n.use(initReactI18next).init({
 		Fr: {translation: fr},
 	},
 	interpolation: {
-		escapeValue: false // react already safes from xss
+		escapeValue: false 
 	}
 });
 

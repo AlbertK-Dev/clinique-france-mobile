@@ -7,7 +7,8 @@ const styles = {
 
     headerItemGroup: {
         backgroundColor: colors.white,
-        padding: 15
+        padding: 15,
+        gap:15
     },
 
     headerText: {
@@ -17,6 +18,9 @@ const styles = {
     headerItem: {
         alignItems: 'center',
         marginBottom: '5%',
+        display:'flex',
+        flexDirection:"row",
+        gap:5
     },
 
     iconBox: {

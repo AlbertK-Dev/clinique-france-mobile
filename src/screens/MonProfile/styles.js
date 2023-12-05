@@ -15,6 +15,16 @@ export const styles = StyleSheet.create({
     borderColor: "blue",
     justifyContent: "center",
     alignItems: "center",
+    display:"flex",
+    flexDirection:"row"
+  },
+
+  input: {
+    fontSize: 16,
+    width: "100%",
+    height: 50,
+    marginVertical: 5,
+    paddingLeft:15,
   },
 
   iconCam:{
@@ -36,15 +46,17 @@ export const styles = StyleSheet.create({
     backgroundColor: "rgba(240, 240, 240, 0.69)",
     width: "100%",
     borderRadius: 5,
+    marginTop:10,
     paddingVertical: 5,
     paddingHorizontal: 10,
   },
 
   box1: {
     width: "100%",
-    marginBottom: 5,
+    marginBottom: 10,
     justifyContent: "center",
     alignItems: "center",
+    marginTop:10,
   },
 
   textLabel: { marginBottom: 5, fontSize: 14, color: "#626262" },

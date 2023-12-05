@@ -1,6 +1,5 @@
-import { VStack, View } from "native-base";
 import React, { useState } from "react";
-import { Text, TouchableOpacity, Alert } from "react-native";
+import {View, TouchableOpacity, Alert } from "react-native";
 import Header from "../../components/Header";
 import ParameterList from "../../components/parameterList/";
 import UserAvatar from "../../components/UserAvatar";
@@ -10,14 +9,6 @@ import { useNavigation } from "@react-navigation/native";
 import { useDispatch, useSelector } from "react-redux";
 import { userLogout } from "../../redux/User/action";
 import { useTranslation } from "react-i18next";
-import {
-  User,
-  Setting2,
-  TableDocument,
-  Messages3,
-  InfoCircle,
-  Logout,
-} from "iconsax-react-native";
 import { Platform } from "react-native";
 
 function Profile() {
@@ -59,19 +50,18 @@ function Profile() {
           />
         </View>
       </View>
-      <VStack style={styles.section2} space={3}>
+      <View style={styles.section2}>
         <TouchableOpacity
           style={styles.item}
           onPress={() => navigation.navigate(SCREENS.MON_PROFILE)}
         >
-          <ParameterList icon={<User />} label={translate("TEXT.MY_PROFILE")} />
+          <ParameterList  label={translate("TEXT.MY_PROFILE")} />
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => navigation.navigate(SCREENS.SETTINGS)}
           style={styles.item}
         >
           <ParameterList
-            icon={<Setting2 name="settings" />}
             label={"Parametres"}
           />
         </TouchableOpacity>
@@ -80,7 +70,6 @@ function Profile() {
           onPress={() => navigation.navigate(SCREENS.TrANSACTION)}
         >
           <ParameterList
-            icon={<TableDocument />}
             label={"Historique de transaction"}
           />
         </TouchableOpacity>
@@ -88,24 +77,21 @@ function Profile() {
           style={styles.item}
           onPress={() => navigation.navigate(SCREENS.FAQ_SCREEN)}
         >
-          <ParameterList icon={<Messages3 />} label={"FAQ et Assistance"} />
+          <ParameterList  label={"FAQ et Assistance"} />
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => navigation.navigate(SCREENS.ABOUT_US)}
           style={styles.item}
         >
-          <ParameterList icon={<InfoCircle />} label={"A propos"} />
+          <ParameterList  label={"A propos"} />
         </TouchableOpacity>
-        {/*<TouchableOpacity onPress={() => navigation.navigate(SCREENS.ASTUCESANTE)} style={styles.item}>
-          <ParameterList icon={<InfoCircle />} label={"Astuces santé"} />
-  </TouchableOpacity>*/}
-      </VStack>
+      </View>
       <View style={styles.section3}>
         <TouchableOpacity
           onPress={() => setTryLogout(true)}
           style={{ ...styles.item, height: "50%" }}
         >
-          <ParameterList icon={<Logout />} label={"Se déconnecter"} />
+          <ParameterList  label={"Se déconnecter"} />
         </TouchableOpacity>
       </View>
     </View>

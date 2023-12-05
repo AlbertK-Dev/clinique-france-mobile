@@ -7,7 +7,6 @@ import colors from "./src/constants/colours";
 import { enableScreens } from "react-native-screens";
 import { Provider } from "react-redux";
 import store from "./src/redux/setups/store";
-import { NativeBaseProvider, Text } from "native-base";
 import { navigationRef } from "./src/routes/rootNavigation";
 import { useEffect, useRef, useState } from "react";
 import * as Notifications from "expo-notifications";
@@ -71,17 +70,15 @@ export default function App() {
   if (!fontsLoaded) return null;
 
   return (
-    <NativeBaseProvider theme={theme}>
-      <Provider store={store}>
-        <SocketProvider>
-          <NavigationContainer ref={navigationRef}>
-            <SafeAreaView>
-              <StatusBar backgroundColor={colors.primary} />
-            </SafeAreaView>
-            <Navigator />
-          </NavigationContainer>
-        </SocketProvider>
-      </Provider>
-    </NativeBaseProvider>
+    <Provider store={store}>
+      <SocketProvider>
+        <NavigationContainer ref={navigationRef}>
+          <SafeAreaView>
+            <StatusBar backgroundColor={colors.primary} />
+          </SafeAreaView>
+          <Navigator />
+        </NavigationContainer>
+      </SocketProvider>
+    </Provider>
   );
 }

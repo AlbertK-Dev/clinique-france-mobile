@@ -1,26 +1,13 @@
-import React, { useEffect, useState } from "react";
-import {
-  Box,
-  Icon,
-  View,
-  Text,
-  HStack,
-  Button,
-  VStack,
-  Input,
-  Spinner,
-  useToast,
-} from "native-base";
-import { EvilIcons } from "@expo/vector-icons";
-import { Pressable, SafeAreaView } from "react-native";
-import styles from "./style";
-import colors from "../../constants/colours";
-import { TouchableOpacity } from "react-native";
+import { Warning2, LockCircle } from "iconsax-react-native";
+import React, { useState } from "react";
+import { TextInput, Text, View, Alert, Platform } from "react-native";
 import { connect, useDispatch, useSelector } from "react-redux";
-import { Warning2 } from "iconsax-react-native";
+import { Button } from "react-native-paper";
+import colors from "../../constants/colours";
 import { processVerifCode } from "../../redux/User/action";
-import CustomToast from "../../components/CustomToast";
 import { isEmailValid } from "../../utils/helper";
+import styles from "./style";
+import { REINITIALIZE } from "../../redux/User/types";
 
 const CELL_COUNT = 5;
 
@@ -43,11 +30,8 @@ const PhoneConfirm = ({
     caracters[3] == codeVerif?.codeVerif?.split("")[3] &&
     caracters[4] == codeVerif?.codeVerif?.split("")[4];
   const [isEmpty, setIsEmpty] = useState(false);
-  const emailValide = isEmailValid(email1);
+  const emailValide = isEmailValid(email1.trim());
 
-  console.log("eamil valide", emailValide);
-
-  const toast = useToast();
 
   const resetPassword = () => {
     setIsEmpty(true);
@@ -55,116 +39,98 @@ const PhoneConfirm = ({
       dispatch(processVerifCode({ email: email1 }));
     }
     if (errorCodeVerif) {
-      toast.show({
-        render: () => {
-          return (
-            <CustomToast
-              message={errorCodeVerif ? errorCodeVerif : "le compte n'existe pas"}
-              color={colors.danger}
-              bgColor={"red.100"}
-              icon={<Warning2 />}
-              iconColor={colors.danger}
-            />
-          );
-        },
-        placement: "top",
-        duration: 3000,
-      });
+      Alert.alert(
+        Platform.OS === "ios"
+          ? "ADRESSE E-MAIL INVALID"
+          : "Adresse e-mail invalide",
+        "Un problème est survenue lors de la vérification de votre mail, Il semble qu'elle n'est pas liée à votre compte",
+        [
+          {
+            text: "Recommencer",
+            onPress: () => {
+              console.log("Cancel");
+              dispatch({ type: REINITIALIZE });
+            },
+          },
+        ]
+      );
     }
   };
 
   return (
-    <View alignItems={"center"} bg={colors.white} flex={1} p={5}>
-      <VStack alignItems={"center"} mt={10} mb={15}>
-        <Box mb={10}>
-          <Box style={styles.circle}>
-            <Icon as={EvilIcons} name="lock" color={colors.white} size={90} />
-          </Box>
-        </Box>
+    <View style={styles.container}>
+      <View style={{ alignItems: "center", marginTop: 35 }}>
+        <View style={styles.circle}>
+          <LockCircle size="50" color={colors.white} />
+        </View>
         <Text
-          mb={5}
           style={{
-            paddingTop: 5,
+            paddingTop: 20,
+            marginBottom: 30,
             fontSize: 25,
             fontWeight: 700,
-            height: 30,
           }}
         >
           Mot de passe oublié
         </Text>
-      </VStack>
-
-      {/*section 1 */}
-      <VStack
+      </View>
+      <View
         justifyItems={"center"}
         justifyContent={"center"}
         alignItems={"center"}
         w={"100%"}
       >
         <Text style={styles.message}>
-          Veillez entre l'adresse mail lié à votre compte afin de recevoir le
-          code de vérification
+          Veuillez entrer l'adresse e-mail liée à votre compte afin de recevoir
+          le code de vérification.
         </Text>
-        <Input
-          mx="3"
+        <TextInput
+          style={styles.input}
           value={email1}
           fontSize={15}
           placeholder="Entrez votre adresse mail"
-          w="90%"
-          borderRadius={25}
-          paddingLeft={5}
-          borderColor={
-            isEmpty && email1 === "" ? colors.danger : colors.text_grey_hint
-          }
-          paddingRight={5}
           onChangeText={(e) => setEmail(e)}
-          height={45}
-          mt={5}
-          mb={3}
         />
 
         {!emailValide && email1 !== "" && (
-          <HStack
-            rounded={5}
-            p={2}
-            backgroundColor={colors.transp_warning}
-            space={1}
-            width={"85%"}
-            alignItems={"center"}
-          >
+          <View style={styles.viewWar}>
             <Warning2 color={colors.danger} size={15} />
             <Text
               style={{
                 fontSize: 12,
                 color: colors.danger,
+                marginLeft: 8,
               }}
             >
               Mauvais format d'e-mail !
             </Text>
-          </HStack>
+          </View>
         )}
         <Button
-          mt={2}
           style={styles.btn}
-          isLoading={settingPWLoading}
-          isDisabled={!emailValide}
+          loading={codeVerifLoading}
+          disabled={!emailValide}
+          buttonColor={colors.primary}
+          mode="contained"
           onPress={() => {
             resetPassword();
           }}
         >
           {codeVerifLoading ? (
-            <Spinner accessibilityLabel="loading" size="sm" color={"white"} />
+            ""
           ) : (
-            <Text color={colors.white}>Envoyer</Text>
+            <Text style={{ color: colors.white, fontSize: 16 }}>Envoyer</Text>
           )}
         </Button>
-      </VStack>
-      <Button textDecorationLine={"underline"} mt={"20%"} variant={"unstyled"}>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <Text color={colors.primary} style={styles.btnLabel}>
-            Fermer
-          </Text>
-        </TouchableOpacity>
+      </View>
+      <Button
+        style={{ marginTop: 50 }}
+        textColor={colors.primary}
+        onPress={() => navigation.goBack()}
+      >
+        <Text color={colors.primary} style={styles.btnLabel}>
+          Fermer
+        </Text>
       </Button>
     </View>
   );

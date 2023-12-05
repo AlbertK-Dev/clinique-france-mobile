@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "Clinique France",
+    "name": "CliniqueFrance",
     "slug": "CF",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -29,8 +29,12 @@
     },
     "extra": {
       "eas": {
-        "projectId": ""
+        "projectId": "d2e93d54-ccd5-4242-947c-e0da8704717f"
       }
+    },
+    "android": {
+      "googleServicesFile": "./google-services.json",
+      "package": "com.cliniquefrance.org"
     }
   }
 }

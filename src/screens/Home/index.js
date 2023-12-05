@@ -3,8 +3,9 @@ import OnBoarding2 from "../../components/OnBoarding";
 import { NORMAL_TEXT_SIZE } from "../../constants/size";
 import { setApp } from "../../redux/commons/action";
 import logo from "../../assets/img/hospi-rdv__9_-removebg-preview.png";
-import { Center, Image, Spinner, Text, VStack } from "native-base";
 import { useEffect, useState } from "react";
+import { Image, View } from "react-native";
+import { Text, ActivityIndicator } from "react-native-paper";
 import { userLocalAuth } from "../../redux/User/action";
 import colors from "../../constants/colours";
 import { IS_BYPASS_ONBOARDING } from "../../constants/others";
@@ -28,7 +29,6 @@ const Home = ({ loadingLocalAuth, localAuth }) => {
   }, []);
 
   const renderLogin = (truth) => {
-    console.log("-------------", truth);
     if (truth) {
       return <Login navigation={navigation} />;
     } else {
@@ -39,19 +39,18 @@ const Home = ({ loadingLocalAuth, localAuth }) => {
   return (
     <>
       {!loadingLocalAuth && !localAuth ? (
-        renderLogin(bypassOnboarding)
+        //renderLogin(bypassOnboarding)
+        <OnBoarding2 />
       ) : (
-        <Center flex={1} alignItems={"center"}>
-          <VStack space={2}>
-            <Image height={200} width={250} source={logo} alt="logo" />
-            <Spinner accessibilityLabel="Loading" size={"sm"} />
-            <Center>
-              <Text color={colors.text_grey_hint} fontSize={14}>
+        <View style={{flex:1, alignItems:'center',justifyContent:'center'}}>
+          <View space={2}>
+            <Image style={{height:250, width:300}} source={logo} alt="logo" />
+              <ActivityIndicator color={colors.primary}/>
+              <Text style={{color:colors.text_grey_hint, textAlign:'center'}}>
                 Patientez...
               </Text>
-            </Center>
-          </VStack>
-        </Center>
+          </View>
+        </View>
       )}
     </>
   );

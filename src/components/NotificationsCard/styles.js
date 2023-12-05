@@ -6,14 +6,9 @@ const styles = StyleSheet.create({
         backgroundColor: colors.white,
         borderRadius: 10,
         padding: 10,
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 1,
-        },
-        shadowOpacity: 0.1,
-        shadowRadius: 3.84,
-        elevation: 1
+        marginBottom:12,
+        margin:3,
+        gap:5
     },
 
     header: {
@@ -31,7 +26,8 @@ const styles = StyleSheet.create({
     },
 
     label: {
-        fontWeight: '500',
+        fontWeight: '700',
+        fontSize:16
     },
 
     contentTitle: {
@@ -40,7 +36,8 @@ const styles = StyleSheet.create({
     },
 
     contentBody: {
-        color: colors.text_grey_hint
+        color: colors.text_grey_hint,
+        fontSize:14
     },
 
     footerLink: {
@@ -60,7 +57,10 @@ const styles = StyleSheet.create({
 
     userReact: {
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        display:'flex',
+        flexDirection:'row',
+        gap:5
     },
 
     emoji: {

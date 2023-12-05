@@ -1,27 +1,14 @@
-import {
-  Box,
-  HStack,
-  Icon,
-  Input,
-  Stack,
-  Text,
-  VStack,
-  View,
-} from "native-base";
-import React, { useEffect, useRef, useState } from "react";
-import { Ionicons } from "@expo/vector-icons";
+import React, { useEffect, useRef } from "react";
 import colors from "../../constants/colours";
-import { SharedElement } from "react-navigation-shared-element";
-import { Feather } from "@expo/vector-icons";
-import { PraticiensForSearch } from "../../components/PraticiensForSearch";
+import { ArrowLeft } from "iconsax-react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { searchPratByKey } from "../../redux/Praticiens/actions";
-import { PratSearchSkeleton } from "./skeleton";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import * as SCREENS from "../../constants/screens";
 import DoctorCard from "../../components/DoctorCard/DoctorCard";
 import { getDispo, getMotifs } from "../../redux/RDV/actions";
-import { ScrollView } from "react-native";
+import { ScrollView, View } from "react-native";
+import { ActivityIndicator, Text, TextInput } from "react-native-paper";
 
 export const GlobalSearch = ({ navigation }) => {
   const dispatch = useDispatch();
@@ -40,31 +27,25 @@ export const GlobalSearch = ({ navigation }) => {
   }, []);
 
   return (
-    <Box flex={1} style={{ backgroundColor: colors.white }}>
-      <HStack marginLeft={1} width={"100%"} alignItems={"center"}>
-        <Stack width={"10%"} justifyContent={"center"} alignItems={"center"}>
-          <Feather
+    <View flex={1} style={{paddingVertical:6, backgroundColor: colors.white }}>
+      <View style={{display:'flex', flexDirection:'row', alignItems:"center", padding:10, gap:10 }}>
+          <ArrowLeft
             onPress={() => navigation.goBack()}
-            name="arrow-left"
             size={24}
             color={colors.primary}
           />
-        </Stack>
-        <Input
+        <TextInput
+          outlineStyle={{ borderRadius: 15, borderColor: colors.desable }}
+          mode="outlined"
+          keyboardType="default"
           ref={InputRef}
-          width={"80%"}
-          borderWidth={0}
-          rounded={12}
-          paddingLeft={5}
           onChangeText={(text) => handleSearch(text)}
-          fontSize={14}
-          margin={3}
-          bg={colors.white}
           placeholder="Rechercher un spécialiste"
+          style={{width:"90%", backgroundColor:colors.desable, height:45}}
         />
-      </HStack>
+      </View>
       <ScrollView>
-        <VStack space={3}>
+        <View space={3}>
           {!loadingSearch && searchedPrats?.length > 0 ? (
             searchedPrats?.map((p, i) => {
               return (
@@ -99,7 +80,7 @@ export const GlobalSearch = ({ navigation }) => {
               );
             })
           ) : !loadingSearch && searchedPrats?.length == 0 ? (
-            <VStack
+            <View
               style={{
                 height: 100,
                 alignItems: 'center',
@@ -107,15 +88,14 @@ export const GlobalSearch = ({ navigation }) => {
               }}
             >
               <Text style={{color: colors.text_grey_hint}}>Aucune données </Text>
-            </VStack>
+            </View>
           ) : (
-            <VStack>
-              <DoctorCard isEmpty={true} />
-              <DoctorCard isEmpty={true} />
-            </VStack>
+            <View style={{marginTop:15}}>
+             <ActivityIndicator size={40} color={colors.primary}/>
+            </View>
           )}
-        </VStack>
+        </View>
       </ScrollView>
-    </Box>
+    </View>
   );
 };

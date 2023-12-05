@@ -1,67 +1,95 @@
 import colors from "../../constants/colours";
-import { StyleSheet } from 'react-native';
-
 
 const styles = {
-    circle: {
-        borderRadius: 50,
-        height: 100,
-        width: 100,
-        backgroundColor: colors.secondary,
-        alignItems: 'center',
-        justifyContent: 'center'
-    },
+  container: {
+    padding: 15,
+    backgroundColor: colors.white,
+    height: "100%",
+  },
 
-    title: {
-        fontSize: 20,
-        fontWeight: '700',
-        padding: 2
-    },
+  circle: {
+    borderRadius: 50,
+    height: 100,
+    width: 100,
+    backgroundColor: colors.secondary,
+    alignItems: "center",
+    justifyContent: "center",
+  },
 
-    message: {
-        textAlign: 'center',
-        color: colors.text_grey_hint,
-        marginBottom: 5
-    },
+  title: {
+    fontSize: 16,
+    fontWeight: "700",
+    padding: 2,
+  },
 
-    phoneNumber: {
-        color: colors.primary,
-        fontSize: 16,
-        fontWeight: '600'
-    },
+  input: {
+    fontSize: 16,
+    width: "92%",
+    height: 50,
+    marginVertical: 5,
+    marginTop: 15,
+    marginBottom: 10,
+    backgroundColor: colors.desable,
+    borderRadius: 80,
+    paddingLeft: 20,
+  },
 
-    btn: {
-        height: 45,
-        width: '90%',
-        fontSize: 14,
-        borderRadius: 25,
-        borderColor: colors.primary,
-    },
+  message: {
+    textAlign: "center",
+    color: colors.text_grey_hint,
+    marginBottom: 5,
+  },
 
-    btnLabel: {
-        fontSize: 16
-    },
-    root: {marginBottom: 10},
-    title: { textAlign: 'center', fontSize: 30 },
-    // codeFiledRoot: { marginTop: 20 },
-    cell: {
-        display: 'flex',
-        flexDirection: "row",
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: 50,
-        height: 50,
-        borderRadius: 50,
-        // lineHeight: 38,
-        fontSize: 24,
-        borderWidth: 1,
-        borderColor: '#00000030',
-        textAlign: 'center',
-        paddingTop: "6%"
-    },
-    focusCell: {
-        borderColor: '#000',
-    },
-}
+  phoneNumber: {
+    color: colors.primary,
+    fontSize: 16,
+    fontWeight: "600",
+  },
+
+  btn: {
+    height: 45,
+    width: "90%",
+    fontSize: 14,
+    borderRadius: 25,
+    marginBottom: 20,
+    marginTop: 10,
+    borderColor: colors.primary,
+  },
+
+  btnLabel: {
+    fontSize: 16,
+  },
+  root: { marginBottom: 10 },
+  title: { textAlign: "center", fontSize: 30 },
+  // codeFiledRoot: { marginTop: 20 },
+  cell: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    width: 50,
+    height: 50,
+    borderRadius: 50,
+    // lineHeight: 38,
+    fontSize: 24,
+    borderWidth: 1,
+    borderColor: "#00000030",
+    textAlign: "center",
+    paddingTop: "6%",
+  },
+  focusCell: {
+    borderColor: "#000",
+  },
+
+  viewWar: {
+    backgroundColor: colors.transp_warning,
+    width: "85%",
+    alignItems: "center",
+    display: "flex",
+    flexDirection: "row",
+    height:30,
+    paddingLeft:8
+  },
+};
 
 export default styles;

@@ -114,7 +114,6 @@ function* getDispo({ data }) {
     date: data?.date,
     day: data?.day,
   });
-  console.log(url);
   try {
     const result = yield getUnauthRequest(url);
     if (result.success) {
@@ -148,7 +147,6 @@ function* postRDV({ data }) {
     active: true,
     idCentre: data?.idCentre,
   };
-  console.log(url2);
   try {
     const result = yield postUnauthRequest(url1, payload);
     let idFiche;
@@ -187,11 +185,11 @@ function* postRDV({ data }) {
         date_long: data?.date_long,
         // "dayOfWeek": 1,
         date: data?.period?.day,
-        clientID: data?.clientID,
       };
       idFiche = result.data?._id;
       rdv = yield postUnauthRequest(url2, rdvData);
     } else {
+
       yield put({
         type: types.POST_RDV_REQUEST_FAILED,
         payload: "Erreur lors de la creation du rendez-vous!",
@@ -202,8 +200,6 @@ function* postRDV({ data }) {
       }, 3000);
     }
     if (rdv?.success) {
-      console.log("success");
-
       yield put({
         type: types.POST_RDV_REQUEST_SUCCESS,
         payload: rdv?.data[0],
@@ -225,7 +221,7 @@ function* postRDV({ data }) {
       }, 3000);
     }
   } catch (error) {
-    yield put({ type: types.POST_RDV_REQUEST_FAILED, payload: error });
+    yield put({ type: types.POST_RDV_REQUEST_FAILED, payload: error.message });
     yield setTimeout(() => {
       //RootNavigation.navigate(SCREENS.ACCEUIL)
       put({ type: "CLEAR_ERR_SUCC" });
@@ -261,7 +257,6 @@ function* putRDV({ data }) {
     idUser: data?.idUser,
     date_long: data?.date_long,
   };
-  console.log(payload);
   try {
     const result = yield putUnauthRequest(url, payload);
     if (result.success) {

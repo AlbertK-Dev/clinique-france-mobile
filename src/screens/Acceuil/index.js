@@ -1,35 +1,33 @@
 import React, { useEffect, useState } from "react";
-import {
-  Input,
-  ScrollView,
-  View,
-  HStack,
-  Text,
-  VStack,
-  Icon,
-  Pressable,
-  FlatList,
-  Skeleton,
-} from "native-base";
 import styles from "./style";
 import { specialites, practiciens } from "../../utils/helper";
 import colors from "../../constants/colours";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { getProfession } from "../../redux/professions/actions";
-import { clearCache, getMotifs } from "../../redux/RDV/actions";
-import * as Notifications from "expo-notifications";
+import { clearCache } from "../../redux/RDV/actions";
 import { sendExpoToken, getAdressesFromCoords } from "../../redux/User/action";
 import * as SCREENS from "../../constants/screens";
-import { SharedElement } from "react-navigation-shared-element";
 import { getAllPrats } from "../../redux/Praticiens/actions";
 import { Location, SearchNormal1 } from "iconsax-react-native";
 import { useTranslation } from "react-i18next";
 import * as ExpoLocation from "expo-location";
 import NextAppointment from "../../components/NextAppointment";
-import { getAppSpecialties, setShouldSeeBehind } from "../../redux/commons/action";
+import {
+  getAppSpecialties,
+  setShouldSeeBehind,
+} from "../../redux/commons/action";
 import DoctorCard from "../../components/DoctorCard/DoctorCard";
-import { Alert } from "react-native";
+import {
+  Alert,
+  View,
+  FlatList,
+  Text,
+  ScrollView,
+  Pressable,
+} from "react-native";
 import messaging from "@react-native-firebase/messaging";
+import { setNotificationCardinal } from "../../redux/notifications/actions";
+import { Surface, TextInput, ActivityIndicator } from "react-native-paper";
 
 const _spacing = 3;
 const datas = [
@@ -62,11 +60,13 @@ const Acceuil = ({
   };
 
   useEffect(() => {
-    dispatch(setShouldSeeBehind(false))
+    dispatch(setShouldSeeBehind(false));
     dispatch(getProfession());
     dispatch(clearCache());
     dispatch(getAllPrats());
     dispatch(getAppSpecialties());
+    userInfos?.user?._id &&
+      dispatch(setNotificationCardinal(userInfos?.user?._id));
   }, []);
 
   useEffect(() => {
@@ -78,7 +78,6 @@ const Acceuil = ({
         authStatus === messaging.AuthorizationStatus.PROVISIONAL;
 
       if (enabled) {
-        // console.log('Authorization status:', authStatus);
       }
     };
 
@@ -86,7 +85,6 @@ const Acceuil = ({
       messaging()
         .getToken()
         .then(async (token) => {
-          //  console.log(token)
           dispatch(sendExpoToken({ _id: user?._id, token: token }));
         });
     } else {
@@ -120,7 +118,6 @@ const Acceuil = ({
   }, []);
 
   useEffect(() => {
-    // Get user coords (lat and long)
     const requestLocationPermission = async () => {
       let { status } = await ExpoLocation.requestForegroundPermissionsAsync();
       if (status !== "granted") {
@@ -137,150 +134,154 @@ const Acceuil = ({
   return (
     <View flex={1}>
       <ScrollView
-        // stickyHeaderIndices={[1]}
         showsVerticalScrollIndicator={false}
         paddingBottom={_spacing}
         keyboardShouldPersistTaps="never"
       >
-        <VStack bg="white" space={_spacing}>
-          <HStack mx={_spacing} py={_spacing} space={1} alignItems={"baseline"}>
-            <Icon as={<Location />} color="primary.500" />
-            <VStack>
-              <Text color={colors.text_grey_hint}>
-                {translate("TEXT_EMPLACEMENT")}
-              </Text>
-              {!load_address && address ? (
-                <Text isTruncated maxWidth={80} fontWeight="600">
-                  {address.address.road + " " + address.address.city}
+        <View style={styles.viewBoxEmplacment}>
+          <Location color={colors.primary} />
+          <View style={{ width: "100%", marginLeft: 10 }}>
+            <Text style={{ color: colors.text_grey_hint }}>
+              {translate("TEXT_EMPLACEMENT")}
+            </Text>
+            {!load_address && address && (
+              <ActivityIndicator color={colors.primary} size={14} animating={true}/>
+            )}
+          </View>
+        </View>
+        <View style={{ margin: 10 }}>
+          <View style={styles.viewInput}>
+            <SearchNormal1 color={colors.primary} name="person" />
+            <TextInput
+              outlineStyle={{ borderRadius: 50, borderColor: colors.desable }}
+              mode="outlined"
+              keyboardType="default"
+              style={styles.input}
+              outlineColor="white"
+              placeholder="Recherher un praticien"
+              onPressIn={() => navigation.navigate(SCREENS.GLOBAL_SEARCH)}
+              onChangeText={(text) => setSearchText(text)}
+              onSubmitEditing={handleSearch}
+            />
+          </View>
+          {/* Prochain rendez-vous */}
+          <View style={styles.viewBoxFirstRdv}>
+            <View style={styles.viewBoxTextFirstRdv}>
+              <Text style>{translate("TEXT_NEXT_APPOINTMENT")}</Text>
+              <Pressable
+                onPress={() => {
+                  navigation.navigate(SCREENS.RDV_CONTAINER);
+                }}
+              >
+                <Text style={{ color: colors.primary }}>
+                  {translate("TEXT.SEE_ALL")}
                 </Text>
-              ) : (
-                <Skeleton.Text h={1} py={2.5} />
-              )}
-            </VStack>
-          </HStack>
-        </VStack>
-        <VStack bg="white" py={_spacing}>
-          <Input
-            mx={_spacing}
-            showSoftInputOnFocus={false}
-            h={45}
-            rounded={22}
-            borderWidth={0}
-            fontSize={14}
-            bg={colors.bg_grey}
-            placeholder={translate("TEXT_SEARCH_PLACEHOLDER")}
-            InputLeftElement={
-              <SearchNormal1
-                style={{ marginLeft: 10 }}
-                size={20}
-                color={colors.primary}
-              />
-            }
-            onPressIn={() => navigation.navigate(SCREENS.GLOBAL_SEARCH)}
-            onChangeText={(text) => setSearchText(text)}
-            onSubmitEditing={handleSearch}
-          />
-        </VStack>
-        {/* Prochain rendez-vous */}
-        <VStack
-          bg="white"
-          borderBottomRadius={_spacing * 6}
-          py={_spacing}
-          flex={1}
-          space={_spacing}
-        >
-          <HStack mx={_spacing} justifyContent={"space-between"}>
-            <Text fontWeight={600}>{translate("TEXT_NEXT_APPOINTMENT")}</Text>
-            <Pressable
-              onPress={() => {
-                navigation.navigate(SCREENS.RDV_CONTAINER);
+              </Pressable>
+            </View>
+
+            <View>
+              <NextAppointment />
+            </View>
+          </View>
+
+          <View>
+            <Text
+              style={{
+                ...styles.textBold,
+                marginTop: 10,
+                marginBottom: 10,
+                marginLeft: 8,
               }}
             >
-              <Text color="primary.500">{translate("TEXT.SEE_ALL")}</Text>
-            </Pressable>
-          </HStack>
-
-          <VStack flex={1}>
-            <NextAppointment />
-          </VStack>
-        </VStack>
-
-        <VStack mt={_spacing}>
-          <HStack mx={_spacing} justifyContent={"space-between"}>
-            <Text fontWeight={600}>{translate("TEXT.SPEC")}</Text>
-            {/* <Pressable onPress={() => {}}>
-              <Text color="primary.500">{translate("TEXT.SEE_ALL")}</Text>
-            </Pressable> */}
-          </HStack>
-          <FlatList
-            data={props.specialties}
-            keyExtractor={({ value, _id }) => _id.toString()}
-            horizontal
-            scrollEnabled
-            showsHorizontalScrollIndicator={false}
-            renderItem={({ item, index }) => {
-              return (
-                <Pressable
-                  mr={index === props.specialties.length - 1 ? _spacing : 0}
-                  py={_spacing}
-                  ml={_spacing}
-                  onPress={() => {}}
-                >
-                  <View bg={"white"} style={[styles.filter, styles.shadow]}>
-                    <Text color={colors.black}>{item.nom || item.label}</Text>
-                  </View>
-                </Pressable>
-              );
-            }}
-          />
-          {!props.specialties && (
-            <HStack>
-              {datas.map((d) => (
-                <View key={d.key} paddingY={_spacing} marginLeft={_spacing - 1}>
-                  <Skeleton h={10} width={150} rounded="full" />
-                </View>
-              ))}
-            </HStack>
-          )}
-        </VStack>
-
-        <VStack my={_spacing}>
-          <HStack mx={_spacing} justifyContent={"space-between"}>
-            <Text fontWeight={600}>{translate("TEXT.POPULAR_DOC")}</Text>
-            <Pressable
-              onPress={() => {
-                navigation.navigate(SCREENS.GLOBAL_SEARCH);
-              }}
-            >
-              <Text color="primary.500">{translate("TEXT.SEARCH_SHORT")}</Text>
-            </Pressable>
-          </HStack>
-          {props.praticiens.length !== 0 ? (
-            <>
-              {props.praticiens.slice(0, 5).map((item, index) => {
+              {translate("TEXT.SPEC")}
+            </Text>
+            <FlatList
+              data={props.specialties}
+              keyExtractor={({ value, _id }) => _id.toString()}
+              horizontal
+              scrollEnabled
+              showsHorizontalScrollIndicator={false}
+              renderItem={({ item, index }) => {
                 return (
-                  <Pressable key={item._id}>
-                    <DoctorCard
-                      speciality={item?.job?.label}
-                      nom_complet={item.name + " " + item.surname}
-                      clinique={
-                        item.affectation.length !== 0
-                          ? item?.affectation[0].label
-                          : ""
-                      }
-                    />
+                  <Pressable
+                    style={{
+                      marginRight:
+                        index === props.specialties.length - 1 ? 5 : 0,
+                      paddingVertical: 2,
+                    }}
+                  >
+                    <Surface style={[styles.filter, styles.shadow]}>
+                      <Text style={{ color: colors.black }}>
+                        {item.nom || item.label}
+                      </Text>
+                    </Surface>
                   </Pressable>
                 );
-              })}
-            </>
-          ) : (
-            <>
-              <DoctorCard key={1} isEmpty={true} />
-              <DoctorCard key={2} isEmpty={true} />
-              <DoctorCard key={3} isEmpty={true} />
-            </>
-          )}
-        </VStack>
+              }}
+            />
+            {!props.specialties && (
+              <View>
+                {datas.map((d) => (
+                  <View
+                    key={d.key}
+                    paddingY={_spacing}
+                    marginLeft={_spacing - 1}
+                  >
+                    <ActivityIndicator color={colors.primary} size={15} animating={true} />
+                  </View>
+                ))}
+              </View>
+            )}
+          </View>
+
+          <View my={_spacing}>
+            <View
+              style={{
+                ...styles.viewBoxTextFirstRdv,
+                paddingHorizontal: 5,
+                marginTop: 10,
+              }}
+            >
+              <Text style={{ ...styles.textBold }}>
+                {translate("TEXT.POPULAR_DOC")}
+              </Text>
+              <Pressable
+                onPress={() => {
+                  navigation.navigate(SCREENS.GLOBAL_SEARCH);
+                }}
+              >
+                <Text style={{ color: colors.primary }}>
+                  {translate("TEXT.SEARCH_SHORT")}
+                </Text>
+              </Pressable>
+            </View>
+            {props.praticiens.length !== 0 ? (
+              <>
+                {props.praticiens.slice(0, 5).map((item, index) => {
+                  return (
+                    <Pressable key={item._id}>
+                      <DoctorCard
+                        speciality={item?.job?.label}
+                        nom_complet={item.name + " " + item.surname}
+                        clinique={
+                          item.affectation.length !== 0
+                            ? item?.affectation[0].label
+                            : ""
+                        }
+                      />
+                    </Pressable>
+                  );
+                })}
+              </>
+            ) : (
+              <>
+                <DoctorCard key={1} isEmpty={true} />
+                <DoctorCard key={2} isEmpty={true} />
+                <DoctorCard key={3} isEmpty={true} />
+              </>
+            )}
+          </View>
+        </View>
       </ScrollView>
     </View>
   );

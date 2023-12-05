@@ -1,41 +1,46 @@
-import { Animated, StyleSheet, useWindowDimensions } from "react-native";
+import { Animated, StyleSheet, useWindowDimensions, Text } from "react-native";
 import React, { useRef, useState } from "react";
-import {
-  Center,
-  Text,
-  FlatList,
-  HStack,
-  Pressable,
-  View,
-  VStack,
-} from "native-base";
+import { FlatList, Pressable } from "react-native";
 import OnBoardingItem from "./OnBoardingItem";
 import { useNavigation } from "@react-navigation/native";
 import colors from "../../constants/colours";
 import Paginator from "./Paginator";
-import imageFake from "../../assets/img/eneo.png";
+import consultation from "../../assets/img/consultation.png";
+import priseRdv from "../../assets/img/reservation.png";
+import payment from "../../assets/img/paiement.png";
+
 import { CustomeFab } from "../../screens/MonProfile/index2";
 import * as SCREENS from "../../constants/screens";
 import { setBypassOnboarding } from "../../utils/helper";
+import { View } from "react-native";
 
 const data = [
   {
     id: "s85dd4s54ds5d4",
-    title: "titre1",
-    description: "je suis la description",
-    image: imageFake,
+    title:
+    "Vous avez accès à des centres hospitaliers de référence selon votre localisation",
+    description:
+    "Nous mettons à votre disposition des médecin généralistes et spécialistes compétents qui exercent partout sur le territoire." ,
+    image: priseRdv,
+    titre: "Prise de rendez-vous",
   },
   {
     id: "s85d4s54dmdds5d4",
-    title: "titre1",
-    description: "je suis la description",
-    image: imageFake,
+    title:
+      "Effectuez votre paiement en toute sécurité pour confirmer votre rendez-vous.",
+    description:
+      "Optez pour le mode de paiement de votre préférence, que ce soit par carte bancaire ou paiement mobile.",
+    image: payment,
+    titre: "Mode de paiement",
   },
   {
     id: "s85d4s5kqsj4ds5d4",
-    title: "titre1",
-    description: "je suis la description",
-    image: imageFake,
+    title:
+      "N'omettez plus vos rendez-vous médicaux, et assurez-vous d'être toujours à l'heure!",
+    description:
+      "Recevez des notifications pour être prévenu de vos différents rendez-vous.",
+    image: consultation,
+    titre: "Consultation",
   },
 ];
 
@@ -53,8 +58,8 @@ export default function OnBoarding2() {
   };
 
   return (
-    <View flex={1} backgroundColor={colors.primary}>
-      {currentIndex === 2 ? (
+    <View flex={1}>
+      {currentIndex === 2 && (
         <CustomeFab
           navigation={navigation}
           onBoarding={true}
@@ -62,17 +67,8 @@ export default function OnBoarding2() {
           onBegin={() => setBypassOnboarding()}
           action={() => {}}
         />
-      ) : (
-        <View></View>
       )}
-      <VStack>
-        <VStack
-          justifyContent={"center"}
-          style={{ paddingLeft: 15, paddingTop: 20 }}
-        >
-          <Text style={styles.greetfr}>Welcome</Text>
-          <Text style={styles.greetEn}>Bienvenue</Text>
-        </VStack>
+      <View flex={1}>
         <View>
           <FlatList
             overScrollMode="never"
@@ -91,70 +87,50 @@ export default function OnBoarding2() {
             showsHorizontalScrollIndicator={false}
             data={data}
             ref={slidesRef}
-            renderItem={(item) => (
-              <OnBoardingItem key={item.id} scrollX={scrollX} />
+            renderItem={({ item }) => (
+              <OnBoardingItem key={item.id} scrollX={scrollX} {...item} />
             )}
           />
         </View>
-        <View style={{ justifyContent: "center", alignItems: "center" }}>
+        <View
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
           <Paginator data={data} scrollX={scrollX} />
         </View>
 
-        {currentIndex === 0 ? (
-          <HStack>
-            <Pressable
-              w={"100%"}
-              onPress={() => {
-                navigation.navigate(SCREENS.LOGIN);
-                setBypassOnboarding();
+        {currentIndex === 0 && (
+          <Pressable
+            w={"100%"}
+            onPress={() => {
+              navigation.navigate(SCREENS.LOGIN);
+              setBypassOnboarding();
+            }}
+          >
+            <Text
+              style={{
+                color: colors.primary,
+                marginTop: 40,
+                textAlign: "center",
+                fontSize: 18,
               }}
             >
-              <Text
-                style={{
-                  color: colors.white,
-                  marginTop: 50,
-                  textAlign: "center",
-                  fontSize: 18,
-                }}
-              >
-                Ignorer
-              </Text>
-            </Pressable>
-            {/*<Pressable onPress={()=> setCurrentIndex(1)}>
-                        <Text style={{color:colors.white}}>Continuer</Text>
-                 </Pressable>*/}
-          </HStack>
-        ) : (
-          <View></View>
+              Ignorer
+            </Text>
+          </Pressable>
         )}
-        {/* <View style={styles.fourth}>
-                    {currentIndex === 2 ?
-                        <View style={styles.fourthChild}>
-                            <TouchableOpacity
-                                onPress={() => navigation.navigate(LOGIN)}
-                                style={{ display: "flex", flexDirection: 'row', alignItems: 'center' }}>
-                                <Text style={{ color: colors.primary, fontSize: 20 }}>Commencez</Text>
-                                <Image source={arrow} style={{ width: 20, height: 20, marginLeft: 15, marginTop: 5 }} />
-                            </TouchableOpacity>
-                        </View>
-                        :
-                        <View style={{ ...styles.fourthChild, backgroundColor: null, borderColor: null }}></View>}
-                </View> */}
-      </VStack>
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   greetfr: {
-    fontSize: 22,
+    fontSize: 24,
     fontWeight: "bold",
     color: colors.yellow,
-  },
-  greetEn: {
-    fontSize: 22,
-    fontWeight: "bold",
-    color: "white",
   },
   fourth: {
     alignItems: "center",

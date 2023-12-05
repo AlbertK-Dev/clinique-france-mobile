@@ -26,7 +26,6 @@ const initialState = {
 const RDVReducer = (state = initialState, action) => {
   switch (action.type) {
     case "CLEAR_ALL_RDV":
-      console.log("clear");
       return {
         ...state,
         myRdv: [],

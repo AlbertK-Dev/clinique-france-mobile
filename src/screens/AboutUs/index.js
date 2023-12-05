@@ -1,15 +1,14 @@
-import { ScrollView, VStack, View } from "native-base";
 import React from "react";
-import { TouchableOpacity, Image, Platform, Linking } from "react-native";
+import { TouchableOpacity, Image, Platform, Linking, View, ScrollView } from "react-native";
 import Header from "../../components/Header";
 import styles from "./styles";
 import * as SCREENS from "../../constants/screens";
 import { useNavigation } from "@react-navigation/native";
-import { Entypo, AntDesign, FontAwesome5 } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 import ItemAboutUs from "../../components/ItemAboutUs";
 import logo from "../../assets/img/hospi-rdv__9_-removebg-preview.png"
 import { TableDocument, Star1, Profile2User, Share } from 'iconsax-react-native'
+import colors from "../../constants/colours";
 
 
 function AboutUs() {
@@ -45,10 +44,10 @@ function AboutUs() {
             {<Image style={{ height: 150, width: 150 }} source={logo} />}
           </View>
         </View>
-        <VStack space={3} mb={3} style={styles.section2}>
+        <View style={styles.section2}>
           <TouchableOpacity style={styles.item}>
             <ItemAboutUs
-              icon={<TableDocument />}
+              icon={<TableDocument  color={colors.primary}/>}
               tilte={translate("TEXT_APP_NAME")}
               description={
                 "Prenez votre rendez-vous, à tout moment et en tout lieu, en toute simplicité"
@@ -60,7 +59,7 @@ function AboutUs() {
             onPress={openAppStoreOrPlayStore}
           >
             <ItemAboutUs
-              icon={<Star1 />}
+              icon={<Star1 color={colors.primary}/>}
               tilte={translate("TEXT_RATING")}
               description={"Vous aimez cette application ? dites-nous comment nous pouvons l'améliorer"}
             />
@@ -70,7 +69,7 @@ function AboutUs() {
             onPress={shareApp}
           >
             <ItemAboutUs
-              icon={<Share />}
+              icon={<Share color={colors.primary}/>}
               tilte={translate("TEXT_SHARE")}
               description={"Partager application avec vos amis et votre famille"}
             />
@@ -80,7 +79,7 @@ function AboutUs() {
             onPress={openTelegram}
           >
             <ItemAboutUs
-              icon={<Profile2User />}
+              icon={<Profile2User color={colors.primary} />}
               tilte={translate("TEXT_CREW")}
               description={"Chattez avec notre équipe en rejoignant le canal télégram"}
             />
@@ -90,7 +89,7 @@ function AboutUs() {
             style={styles.item}
           >
             <ItemAboutUs
-              icon={<TableDocument />}
+              icon={<TableDocument color={colors.primary} />}
               tilte={translate("TEXT.CGU")}
             />
           </TouchableOpacity>
@@ -99,7 +98,7 @@ function AboutUs() {
             style={styles.item}
           >
             <ItemAboutUs
-              icon={<TableDocument />}
+              icon={<TableDocument color={colors.primary}/>}
               tilte={translate("TEXT.CONFIDENTIAL_TEXT")}
             />
           </TouchableOpacity>
@@ -108,11 +107,11 @@ function AboutUs() {
             style={styles.item}
           >
             <ItemAboutUs
-              icon={<TableDocument />}
+              icon={<TableDocument color={colors.primary}/>}
               tilte={translate("Licenses et remerciements")}
             />
           </TouchableOpacity>
-        </VStack>
+        </View>
       </ScrollView>
     </View>
   );

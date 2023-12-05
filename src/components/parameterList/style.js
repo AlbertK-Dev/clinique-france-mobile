@@ -17,7 +17,9 @@ export const styles = StyleSheet.create({
     },
     subContainer: {
         alignItems:'center',
-        justifyContent:'center'
+        justifyContent:'center',
+        display:'flex',
+        flexDirection:'row'
     },
     image: {
         width: 25,
@@ -30,6 +32,7 @@ export const styles = StyleSheet.create({
         marginRight: 20
     },
     label: {
-        fontSize: 14
+        fontSize: 14,
+        marginLeft:10
     }
 })

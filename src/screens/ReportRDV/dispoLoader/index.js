@@ -1,16 +1,13 @@
-import { View, Text } from 'react-native'
+import { View } from 'react-native'
+import { ActivityIndicator } from 'react-native-paper'
 import React from 'react'
-import { Skeleton } from 'native-base'
+import colors from '../../../constants/colours'
 
 
 const DispoLoader = () => {
     return (
         <View>
-            <View style={{ height: 40, display: 'flex', flexDirection: 'row', marginBottom: 15 }}>
-                <Skeleton h={"100%"} w={"30%"} borderRadius={10} />
-                <Skeleton h={"100%"} w={"30%"} borderRadius={10} ml={3} />
-                <Skeleton h={"100%"} w={"30%"} borderRadius={10} ml={3} />
-            </View>
+           <ActivityIndicator size={20} color={colors.primary} animating={true}/> 
         </View>
     )
 }

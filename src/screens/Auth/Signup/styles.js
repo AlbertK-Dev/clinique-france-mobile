@@ -17,6 +17,68 @@ const styles = StyleSheet.create({
     backgroundColor: colors.desable,
     alignItems: "center",
     height: 50,
+    borderRadius:50,
+    marginTop:10
+
+  },
+
+  input: {
+    fontSize: 16,
+    width: "80%",
+    height: 43,
+    marginVertical: 5,
+    backgroundColor: colors.desable,
+    borderTopRightRadius: 80,
+  },
+
+  warninBox:{
+    backgroundColor: colors.transp_warning,
+    borderRadius: 5,
+    padding: 8,
+    display:'flex',
+    flexDirection:"row",
+    alignItems:'center'
+  },
+
+  warningText:{
+    fontSize: 12,
+    color: colors.danger,
+    left:5
+  },
+
+  cguBox:{
+    display:'flex',
+    flexDirection:"row",
+    alignItems:'center',
+    marginTop:8
+  },
+  btnPrim:{
+    width:"100%",
+    marginTop:15,
+    marginBottom:15
+  },
+
+  viewInput: {
+    display: "flex",
+    flexDirection: "row",
+    paddingLeft: 10,
+    alignItems: "center",
+    justifyItems: "center",
+    backgroundColor: colors.desable,
+    borderRadius:50,
+    marginTop:10,
+    marginBottom:5
+  },
+
+  viewBoxIcon:{
+    display:'flex',
+    alignItems: "center",
+    justifyItems: "center",
+    justifyContent:'center',
+    height:35,
+    width:35,
+    backgroundColor:colors.white,
+    borderRadius:50
   },
 
   boxDatePick: {
@@ -56,35 +118,33 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 
-  // New
 
   logoBox: {
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 10,
   },
 
   intitule: {
     color: "#858585",
     fontSize: 14,
-    fontWeight: '400',
-    textAlign: 'center'
+    fontWeight: "400",
+    textAlign: "center",
   },
 
   image: { width: 200, height: 150, marginTop: 20 },
 
-  labelText: { color: "#858585"},
+  labelText: { color: "#858585" },
 
   registerText: {
-    textDecorationLine: 'underline',
-    marginLeft: 5
+    textDecorationLine: "underline",
+    marginLeft: 5,
   },
 
   forgetPassword: {
     fontSize: 14,
-    fontWeight: '400',
+    fontWeight: "400",
     color: colors.yellow,
-    textAlign: 'center'
+    textAlign: "center",
   },
 
   cgu: {
@@ -97,7 +157,7 @@ const styles = StyleSheet.create({
   cguText: {
     color: colors.yellow,
     textDecorationLine: "underline",
-    marginLeft: 3
+    marginLeft: 3,
   },
 
   leftElement: {
@@ -105,9 +165,8 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     height: 35,
     width: 35,
-    marginLeft: 8
-  }
-
+    marginLeft: 8,
+  },
 });
 
 export default styles;

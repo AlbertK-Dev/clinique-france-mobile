@@ -1,44 +1,20 @@
-import {
-  Box,
-  Button,
-  Divider,
-  FlatList,
-  HStack,
-  Icon,
-  Pressable,
-  ScrollView,
-  Stack,
-  Text,
-  VStack,
-  View,
-  useToast,
-} from "native-base";
 import React, { useEffect } from "react";
 import Header from "../../components/Header";
 import colors from "../../constants/colours";
 import { useState } from "react";
+import { Button, Surface, Text , Divider} from "react-native-paper";
+import { ScrollView, View , Pressable, FlatList} from "react-native";
 import MedItem from "../../components/MedItem";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getDispo,
-  getMotifs,
-  postRDV,
-  saveExtPRData,
-} from "../../redux/RDV/actions";
+import { getDispo, getMotifs, saveExtPRData } from "../../redux/RDV/actions";
 import {
   generateKeyTab,
   generateValuesTab,
   jourDeLaSemaine,
   troncate,
 } from "../../utils/helper";
-import { Danger, Data } from "iconsax-react-native";
-import CustomToast from "../../components/CustomToast";
-import {
-  MaterialIcons,
-  Ionicons,
-  AntDesign,
-  Foundation,
-} from "@expo/vector-icons";
+import { Danger, InfoCircle } from "iconsax-react-native";
+import { MaterialIcons } from "@expo/vector-icons";
 import { LoadingMotifs } from "./loadingMotifSkeleton";
 import { LoadingDispo } from "./LoadingClinicSkeleton";
 import * as SCREENS from "../../constants/screens";
@@ -69,7 +45,6 @@ export const DetailsPraticien = ({ route, navigation }) => {
   const [selectedClinic, setSelectedClinic] = useState(
     actualPraticien?.affectation[0]
   );
-  const toast = useToast();
 
   useEffect(() => {
     dispatch(
@@ -121,28 +96,31 @@ export const DetailsPraticien = ({ route, navigation }) => {
   };
 
   return (
-    <Box flex={1} style={{ backgroundColor: colors.white }}>
-      <Header title={"Détails praticien"} bg={colors.white} />
-      <VStack space={4} height={"82%"}>
-        <HStack
-          px={5}
-          alignItems={"center"}
-          space={4}
+    <View style={{ backgroundColor: colors.white, height: "100%" }}>
+      <Header title={"Détails praticien"} />
+      <View style={{ gap: 10, margin: 5 }}>
+        <View
           style={{
             backgroundColor: colors.white,
             padding: 10,
             borderRadius: 10,
+            alignItems: "center",
+            paddingHorizontal: 5,
+            gap: 10,
+            display: "flex",
+            flexDirection: "row",
+            paddingHorizontal:5
           }}
         >
-          <Box
+          <View
             style={{
               height: 70,
               width: 70,
               borderRadius: 10,
               backgroundColor: colors.text_grey_hint,
             }}
-          ></Box>
-          <VStack>
+          ></View>
+          <View>
             <Text
               style={{
                 fontSize: 14,
@@ -158,65 +136,54 @@ export const DetailsPraticien = ({ route, navigation }) => {
             <Text style={{ color: colors.text_grey_hint }}>
               4,5/5 (388 avis)
             </Text>
-          </VStack>
-        </HStack>
-        <HStack justifyContent={"space-around"} px={8}>
-          <VStack justifyContent={"center"} alignItems={"center"}>
+          </View>
+        </View>
+        <View
+          style={{
+            justifyContent: "space-around",
+            display: "flex",
+            flexDirection: "row",
+            paddingHorizontal: 5,
+          }}
+        >
+          <View justifyContent={"center"} alignItems={"center"}>
             <Text style={{ color: colors.yellow }}>542+</Text>
             <Text>Patients</Text>
-          </VStack>
-          <VStack justifyContent={"center"} alignItems={"center"}>
+          </View>
+          <View justifyContent={"center"} alignItems={"center"}>
             <Text style={{ color: colors.yellow }}>11 years</Text>
             <Text>Experience+</Text>
-          </VStack>
-          <VStack justifyContent={"center"} alignItems={"center"}>
+          </View>
+          <View justifyContent={"center"} alignItems={"center"}>
             <Text style={{ color: colors.yellow }}>4.79</Text>
             <Text>Rating</Text>
-          </VStack>
-        </HStack>
-        <HStack justifyContent={"center"}>
-          <Divider width={"80%"} />
-        </HStack>
-        <HStack
-          mt={2}
-          m={2}
-          marginLeft={5}
-          space={2}
+          </View>
+        </View>
+          <Divider width={"100%"} />
+        <View
           style={{
             width: "80%",
             alignItems: "center",
+            display: "flex",
+            flexDirection: "row",
+            padding: 10,
+            gap: 10,
           }}
         >
-          {/* <Danger color={colors.danger} size={22} /> */}
-          <Icon
-            as={<MaterialIcons />}
-            marginRight={2}
-            name="info"
-            size={"md"}
-            color={"primary.500"}
-          />
-          <Text color={colors.primary} fontWeight={500} width={"95%"}>
+          <InfoCircle variant="Bold" color={colors.primary} />
+          <Text style={{color:colors.primary, fontWeight:500}}>
             {`Parametrez un rendez-vous avec Dr ${
               actualPraticien?.name + " " + actualPraticien?.surname
             } !`}
           </Text>
-        </HStack>
+        </View>
         <ScrollView
-          height={"53%"}
-          nestedScrollEnabled={true}
-          ref={scrollViewRef}
-          onContentSizeChange={(contentWidth, contentHeight) => {
-            shouldScroll &&
-              scrollViewRef.current?.scrollTo({
-                y: contentHeight,
-                animated: true,
-              });
-          }}
+          style={{ height: "38%" }}
           showsVerticalScrollIndicator={true}
         >
-          <VStack space={_spacing}>
-            <VStack px={5}>
-              <Text>Motifs Traitables</Text>
+          <View style={{ padding: 10, gap:15 }}>
+            <View style={{gap:10}}>
+              <Text style={{fontSize:16}}>Motifs Traitables</Text>
               {motifs?.length > 0 && !motifsLoading && !dispoLoading ? (
                 <FlatList
                   data={motifs}
@@ -234,33 +201,25 @@ export const DetailsPraticien = ({ route, navigation }) => {
                           setItemSelected(item);
                         }}
                       >
-                        <View
-                          bg={
-                            itemSelected?.label === item?.label
-                              ? "primary.500"
-                              : "white"
-                          }
-                          borderWidth={1}
-                          borderColor={
-                            itemSelected?.label === item?.label
-                              ? "primary.500"
-                              : colors.normal_gray
-                          }
+                        <Surface
+                          elevation={1}
                           style={[
                             {
                               paddingHorizontal: 20,
                               paddingVertical: 10,
                               borderRadius: 20,
                             },
+
                             {
-                              shadowColor: "#000",
-                              shadowOffset: {
-                                width: 0,
-                                height: 3,
-                              },
-                              shadowOpacity: 0.01,
-                              shadowRadius: 3.84,
-                              elevation: 0.1,
+                              backgroundColor:
+                                itemSelected?.label === item?.label
+                                  ? colors.primary
+                                  : "white",
+                              borderWidth: 1,
+                              borderColor:
+                                itemSelected?.label === item?.label
+                                  ? colors.primary
+                                  : colors.normal_gray,
                             },
                           ]}
                         >
@@ -273,7 +232,7 @@ export const DetailsPraticien = ({ route, navigation }) => {
                           >
                             {troncate(item?.label)}
                           </Text>
-                        </View>
+                        </Surface>
                       </Pressable>
                     );
                   }}
@@ -283,8 +242,8 @@ export const DetailsPraticien = ({ route, navigation }) => {
               ) : (
                 <LoadingMotifs />
               )}
-            </VStack>
-            {actualPraticien?.affectation?.length > 0 ? (
+            </View>
+            {/*{actualPraticien?.affectation?.length > 0 ? (
               <VStack px={5} space={_spacing}>
                 <Text>Clinique affectées</Text>
                 <ScrollView
@@ -323,15 +282,17 @@ export const DetailsPraticien = ({ route, navigation }) => {
                   </Text>
                 </HStack>
               </Stack>
-            )}
-            <VStack px={5} space={_spacing}>
-              <Text>Periode de travail</Text>
+                )}*/}
+            <View style={{ gap: 10 }}>
+              <Text style={{fontSize:16}}>Periode de travail</Text>
               <ScrollView
                 showsHorizontalScrollIndicator={false}
                 horizontal={true}
                 mb={4}
               >
-                <HStack alignItems={"center"}>
+                <View
+                  style={{ gap: 10, display: "flex", flexDirection: "row" }}
+                >
                   {dispo?.length > 0 && !dispoLoading ? (
                     generateKeyTab(dispo).map((d, index) => {
                       return (
@@ -342,15 +303,14 @@ export const DetailsPraticien = ({ route, navigation }) => {
                               setActualCreaneau(generateValuesTab(d, dispo));
                               return d;
                             });
-                            scrollToBottom();
+                            //scrollToBottom();
                             setShouldScroll(true);
                             setTimeout(() => {
                               setShouldScroll(false);
                             }, 500);
                           }}
                         >
-                          <Box
-                            ml={index !== 0 ? 2 : 0}
+                          <View
                             style={{
                               padding: 10,
                               borderRadius: 10,
@@ -370,23 +330,29 @@ export const DetailsPraticien = ({ route, navigation }) => {
                             <Text style={{ color: colors.black }}>
                               {jourDeLaSemaine(d) + ", " + d.split("-")[2]}
                             </Text>
-                          </Box>
+                          </View>
                         </Pressable>
                       );
-                      // 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
                     })
                   ) : (
                     <LoadingDispo />
                   )}
-                </HStack>
+                </View>
               </ScrollView>
-            </VStack>
-            <HStack px={5}>
+            </View>
+            <View
+              style={{
+                gap: 5,
+                padding: 8,
+                display: "flex",
+                flexDirection: "row",
+              }}
+            >
               <ScrollView
                 showsHorizontalScrollIndicator={false}
                 horizontal={true}
               >
-                <HStack alignItems={"center"}>
+                <View style={{ gap:10, display: "flex", flexDirection: "row" }}>
                   {actualCreaneau?.map((d, index) => (
                     <Pressable
                       onPress={() => {
@@ -397,8 +363,7 @@ export const DetailsPraticien = ({ route, navigation }) => {
                       }}
                       key={index}
                     >
-                      <Box
-                        ml={index !== 0 ? 2 : 0}
+                      <View
                         style={{
                           padding: 10,
                           borderRadius: 10,
@@ -424,39 +389,40 @@ export const DetailsPraticien = ({ route, navigation }) => {
                         >
                           {d?.start}
                         </Text>
-                      </Box>
+                      </View>
                     </Pressable>
                   ))}
-                </HStack>
+                </View>
               </ScrollView>
-            </HStack>
-          </VStack>
+            </View>
+          </View>
         </ScrollView>
-      </VStack>
-      <HStack
-        justifyContent={"center"}
-        alignItems={"center"}
-        px={5}
-        width={"100%"}
-        height={"10%"}
-        //</Box> marginTop={5}
-      >
+      </View>
+      <View style={{ padding: 10, marginTop: 10 }}>
         <Button
-          isLoading={loadingPostRdv}
+          loading={loadingPostRdv}
           onPress={handlePostRdv}
           width={"100%"}
           disabled={!allFieldFilled()}
-          height={"60%"}
+          height={45}
           style={{
             backgroundColor: allFieldFilled()
               ? colors.primary
               : colors.trans_primary,
+            justifyContent: "center",
           }}
-          borderRadius={20}
-        >
-          <Text color={colors.white}>PRENDRE UN RDV</Text>
-        </Button>
-      </HStack>
-    </Box>
+          contentStyle={{
+            justifyContent: "center",
+            alignContent: "center",
+            alignItems: "center",
+          }}
+          children={"PRENDRE UN  RDV"}
+          labelStyle={{
+            color: "white",
+            fontSize: 18,
+          }}
+        />
+      </View>
+    </View>
   );
 };

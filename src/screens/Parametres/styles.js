@@ -1,27 +1,45 @@
-import colors from '../../constants/colours';
+import colors from "../../constants/colours";
 
 const styles = {
-    container: {
-        backgroundColor: colors.bg_grey,
-    },
+  container: {
+    backgroundColor: colors.bg_grey,
+  },
 
-    headerItemGroup: {
-        paddingLeft:3,
-    },
+  headerItemGroup: {
+    padding: 20,
+  },
 
-    headerText: {
-        color: colors.text_grey_hint
-    },
+  headerText: {
+    color: colors.text_grey_hint,
+  },
 
-    headerItem: {
-        alignItems: 'center',
-        marginBottom:8,
-        
-    },
+  headerItem: {
+    marginBottom: 15,
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent:"space-between",
+    gap: 10,
+  },
 
-    textBox:{
-        fontSize:16,
-    }
-}
+  item1:{
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 10,
+    flex: 1,
+  },
+
+  textBox: {
+    fontSize: 14,
+    flex: 1,
+  },
+
+  lng: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+  },
+};
 
 export default styles;

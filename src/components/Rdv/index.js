@@ -1,6 +1,6 @@
-import { View } from 'react-native'
+import { Pressable, View } from 'react-native'
+import { Avatar, Button , Text} from 'react-native-paper'
 import React, { memo } from 'react'
-import { Avatar, Button, Text } from 'native-base'
 import colors from '../../constants/colours'
 import styles from './style'
 import * as SCREENS from '../../constants/screens'
@@ -15,13 +15,9 @@ const Rdv = ({ _id, navigation, date, motif, startTime, praticien, status, local
                     <Text fontWeight='600' fontSize={16}>{"Dr. " + praticien}</Text>
                     <Text color={colors.text_grey_hint}>{"Genicologue"}</Text>
                 </View>
-                <Avatar
-                    bg={colors.primary}
-                    width={42}
-                    height={42}
-                    source={{
-                        uri: null
-                    }}></Avatar>
+                <Avatar.Image
+                    size={40}
+                    source={null}></Avatar.Image>
             </View>
             <View style={styles.infoContainer}>
                 <View style={styles.infoView}>
@@ -45,11 +41,11 @@ const Rdv = ({ _id, navigation, date, motif, startTime, praticien, status, local
                     </View>
                 </View>
                 <View style={[styles.infoView, { justifyContent: 'space-between', gap: 10, marginTop: 15 }]}>
-                    {localisation && <Button style={styles.mapBtn} onPress={() => navigation.navigate(SCREENS.GOOGLE_MAP, { localisation })}>
+                    {localisation && <Pressable style={styles.mapBtn} onPress={() => navigation.navigate(SCREENS.GOOGLE_MAP, { localisation })}>
                         <Map1 color={colors.primary} />
-                    </Button>}
-                    <Button onPress={() => navigation.navigate(SCREENS.APPOINTMENT_DETAILS_SCREEN, { _id: _id })} style={styles.reportBtn}>
-                        <Text style={styles.reportText}>Afficher</Text>
+                    </Pressable>}
+                    <Button onPress={() => navigation.navigate(SCREENS.APPOINTMENT_DETAILS_SCREEN, { _id: _id })} textColor={colors.primary} style={styles.reportBtn}>
+                        Afficher
                     </Button>
                 </View>
             </View>

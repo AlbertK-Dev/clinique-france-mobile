@@ -1,18 +1,6 @@
 import React, { useEffect, useState } from "react";
-import {
-  Box,
-  Icon,
-  View,
-  Text,
-  HStack,
-  Button,
-  VStack,
-  Input,
-  Spinner,
-} from "native-base";
-import { EvilIcons } from "@expo/vector-icons";
-import { Pressable, SafeAreaView } from "react-native";
-import { useToast } from "native-base";
+import { Pressable, SafeAreaView, View, Text } from "react-native";
+import { Button, TextInput, ActivityIndicator } from "react-native-paper";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import {
@@ -21,13 +9,13 @@ import {
   useBlurOnFulfill,
   useClearByFocusCell,
 } from "react-native-confirmation-code-field";
-import { Warning2, ArrowLeft } from "iconsax-react-native";
+import { Warning2, ArrowLeft, LockCircle } from "iconsax-react-native";
 import { processVerifCode, userRegistration } from "../../../redux/User/action";
-import CustomToast from "../../../components/CustomToast";
 import styles from "./style";
 import { resettingPassword } from "../../../redux/User/action";
 import colors from "../../../constants/colours";
 import * as SCREENS from "../../../constants/screens";
+import { Alert } from "react-native";
 
 const CELL_COUNT = 5;
 const init_count = 60;
@@ -59,7 +47,6 @@ const ResetPassWord = ({
   const { register } = route?.params;
   const [newPw, setNewPw] = useState("");
   const [cnfPw, setCnfPw] = useState("");
-  const [count, setCount] = useState(init_count);
   const [loading, setLoading] = useState(false);
   const [caracters, setCaracters] = useState([]);
   const [canResetPw, setCanResetPw] = useState(false);
@@ -71,32 +58,12 @@ const ResetPassWord = ({
 
   const navigateback = useNavigation();
 
-  const toast = useToast();
   useEffect(() => {
-    // let interv = setInterval(() => {
-    //   setCount((c) => {
-    //     if (c >= 1) {
-    //       return c - 1;
-    //     }
-    //     return c;
-    //   });
-    // }, 15);
     if (codeVerifSuccess) {
-      toast.show({
-        render: () => {
-          return (
-            <CustomToast
-              message={"Un code à été envoyer a votre mail"}
-              color={colors.success}
-              bgColor={"red.100"}
-              icon={<Warning2 />}
-              iconColor={colors.success}
-            />
-          );
-        },
-        placement: "top",
-        duration: 3000,
-      });
+      Alert.alert(
+        "Code de vérification",
+        "Un code de vérification a été envoyé a votre adresse mail"
+      );
     }
   }, [codeVerifSuccess, errorCodeVerif]);
 
@@ -134,7 +101,6 @@ const ResetPassWord = ({
     if (value == codeVerif?.codeVerif) {
       setBorderCol(colors.success);
       !register && setCanResetPw(true);
-      console.log(route.params);
       register &&
         dispatch(
           userRegistration({ ...route?.params?.formData, active: true })
@@ -153,33 +119,23 @@ const ResetPassWord = ({
   }, [canResetPw, value, codeVerif]);
 
   return (
-    <View bg={colors.white} flex={1} p={5}>
+    <View style={styles.container}>
       <ArrowLeft
         onPress={() => navigateback.goBack()}
         style={{ marginBottom: 10 }}
         size={25}
         color={colors.black}
       />
-      <VStack alignItems={"center"} mb={15}>
-        <Box mb={10}>
-          <Box style={styles.circle}>
-            <Icon as={EvilIcons} name="lock" color={colors.white} size={90} />
-          </Box>
-        </Box>
-        <Text
-          mb={5}
-          style={{
-            paddingTop: 5,
-            fontSize: 25,
-            fontWeight: 700,
-            height: 30,
-          }}
-        >
+      <View alignItems={"center"} mb={15}>
+        <View style={styles.circle}>
+          <LockCircle size="50" color={colors.white} />
+        </View>
+        <Text style={styles.title}>
           {register ? "Vérification de mail" : "Mot de passe oublié"}
         </Text>
-      </VStack>
-      <Box alignItems={"center"} bg={colors.white} width={"100%"}>
-        <VStack alignItems={"center"} mb={7}>
+      </View>
+      <View>
+        <View alignItems={"center"} mb={7}>
           {canResetPw ? (
             ""
           ) : (
@@ -197,7 +153,6 @@ const ResetPassWord = ({
                 value={value}
                 onChangeText={setValue}
                 cellCount={CELL_COUNT}
-                rootStyle={styles.codeFiledRoot}
                 keyboardType="ascii-capable"
                 textContentType="oneTimeCode"
                 renderCell={({ index, symbol, isFocused }) => (
@@ -220,8 +175,8 @@ const ResetPassWord = ({
             </SafeAreaView>
           )}
           {!canResetPw && (
-            <HStack space={1}>
-              <Text style={styles.phoneNumber}>{email ?? ""}</Text>
+            <View style={styles.TextEmailChange}>
+              <Text style={styles.phoneNumber}>{email ?? ""} </Text>
               {!register && (
                 <Pressable
                   onPress={() => {
@@ -233,32 +188,28 @@ const ResetPassWord = ({
                   </Text>
                 </Pressable>
               )}
-            </HStack>
+            </View>
           )}
           {canResetPw && (
-            <VStack space={5}>
-              <Input
-                mx="3"
+            <View style={{ width: "95%", marginBottom: 20, marginTop: 20 }}>
+              <TextInput
+                mode="outlined"
+                outlineStyle={{ borderRadius: 50, borderColor: colors.desable }}
                 value={newPw}
                 onChangeText={(t) => setNewPw(t)}
-                fontSize={15}
                 placeholder="Nouveau mot de passe"
-                w="90%"
-                borderRadius={25}
-                paddingLeft={5}
-                paddingRight={5}
-                height={45}
+                style={{ ...styles.input }}
               />
 
               {newPw !== "" && messages.length > 0 && (
-                <VStack
+                <View
                   style={{
                     backgroundColor: colors.transp_warning,
                     borderRadius: 5,
                     padding: 8,
                   }}
                 >
-                  <HStack space={1} alignItems={"center"}>
+                  <View space={1} alignItems={"center"}>
                     <Warning2 color={colors.danger} size={15} />
                     <Text
                       style={{
@@ -268,7 +219,7 @@ const ResetPassWord = ({
                     >
                       Le mot de passe ne rempli pas le(s) critère(s)
                     </Text>
-                  </HStack>
+                  </View>
                   {messages?.map((message, index) => (
                     <Text
                       style={{ color: colors.black, fontSize: 12 }}
@@ -277,31 +228,27 @@ const ResetPassWord = ({
                       {index + 1}. {message}
                     </Text>
                   ))}
-                </VStack>
+                </View>
               )}
 
-              <Input
-                mx="3"
+              <TextInput
+                mode="outlined"
+                outlineStyle={{ borderRadius: 50, borderColor: colors.desable }}
                 value={cnfPw}
                 onChangeText={(t) => setCnfPw(t)}
-                fontSize={15}
                 placeholder="Confirmer le nouveau mot de passe"
-                w="90%"
-                borderRadius={25}
-                paddingLeft={5}
-                paddingRight={5}
-                height={45}
+                style={{ ...styles.input }}
               />
 
               {cnfPw !== "" && cnfPw !== newPw && (
-                <VStack
+                <View
                   style={{
                     backgroundColor: colors.transp_warning,
                     borderRadius: 5,
                     padding: 8,
                   }}
                 >
-                  <HStack space={1} alignItems={"center"}>
+                  <View space={1} alignItems={"center"}>
                     <Warning2 color={colors.danger} size={15} />
                     <Text
                       style={{
@@ -311,18 +258,23 @@ const ResetPassWord = ({
                     >
                       Les mot de passe ne correspondent pas !
                     </Text>
-                  </HStack>
-                </VStack>
+                  </View>
+                </View>
               )}
-            </VStack>
+            </View>
           )}
-        </VStack>
+        </View>
         <Button
-          mb={4}
-          style={styles.btn}
-          isLoading={settingPWLoading}
-          variant={canResetPw ? "solid" : "outline"}
-          borderWidth={canResetPw ? 0 : 2}
+          style={{
+            ...styles.btn,
+            marginBottom: 20,
+            borderWidth: canResetPw ? 0 : 1.5,
+            borderColor: !canResetPw && colors.primary,
+            backgroundColor: canResetPw && colors.primary,
+          }}
+          loading={settingPWLoading}
+          textColor={canResetPw ? colors.white : colors.primary}
+          mode={canResetPw ? "contained" : "outlined"}
           onPress={() => {
             if (canResetPw && messages.length <= 0 && cnfPw === newPw) {
               handleChangeMp();
@@ -332,35 +284,28 @@ const ResetPassWord = ({
           }}
         >
           {canResetPw ? (
-            <Text color={colors.white} style={styles.btnLabel}>
-              Envoyer
-            </Text>
+            <Text style={styles.btnLabel}>Envoyer</Text>
           ) : codeVerifLoading ? (
-            <Spinner
-              accessibilityLabel="loading"
-              size="sm"
+            <ActivityIndicator
+              size={20}
               color={colors.primary}
             />
           ) : (
-            <Text color={colors.primary} style={styles.btnLabel}>
-              Renvoyer le code 
-            </Text>
+            <Text style={styles.btnLabel}>Renvoyer le code</Text>
           )}
         </Button>
         {!canResetPw && (
           <Button
-            //borderWidth={2}
-            isLoading={loading || loadingReg}
+            loading={loading || loadingReg}
             style={styles.btn}
-            //variant={"outline"}
+            mode="contained"
+            buttonColor={colors.primary}
             onPress={() => handleCheck()}
           >
-            <Text color={colors.white} style={styles.btnLabel}>
-              Soumettre
-            </Text>
+            <Text style={styles.btnLabel}>Soumettre</Text>
           </Button>
         )}
-      </Box>
+      </View>
     </View>
   );
 };

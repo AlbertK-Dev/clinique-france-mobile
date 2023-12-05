@@ -12,7 +12,9 @@ export const styles = StyleSheet.create({
     },
     subContainer: {
         alignItems: 'center',
-        padding: 10
+        padding: 10,
+        display:"flex",
+        flexDirection:"row"
     },
     label: {
         fontSize: 14,

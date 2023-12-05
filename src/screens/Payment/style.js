@@ -119,6 +119,28 @@ const styles = StyleSheet.create({
 
     scrollView: {
         padding: 20
+    },
+
+    viewTelOp:{
+        paddingHorizontal:1, 
+        justifyContent:'space-between',
+        display:"flex",
+        flexDirection:"row"
+    },
+    hStack:{
+        display:"flex",
+        flexDirection:'row',
+        gap:5,
+        alignItems:'center',
+        padding:5,
+        backgroundColor:colors.transp_warning,
+    }, 
+    viewMethod:{
+        display:"flex",
+        flexDirection:"row",
+        gap:15,
+        justifyContent:"center",
+        marginTop:20
     }
 })
 

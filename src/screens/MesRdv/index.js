@@ -4,12 +4,12 @@ import { Skelette } from "./squelette";
 import { useDispatch, useSelector } from "react-redux";
 import { clearCache, getMyRDV } from "../../redux/RDV/actions";
 import { FolderOpen, Sort } from "iconsax-react-native";
+import { Text } from "react-native-paper";
 import styles from "./style";
 import colors from "../../constants/colours";
 import { Pressable, TouchableOpacity, View } from "react-native";
 import BottomSheet from "./bottomSheet";
 import { FlashList } from "@shopify/flash-list";
-import { Text } from "native-base";
 
 const MesRdv = ({ navigation }) => {
   const listRef = useRef()
@@ -234,15 +234,7 @@ const MesRdv = ({ navigation }) => {
 
       {loadingRDV || globalState.showSkeleton &&
         <View style={{ padding: 10 }}>
-          <View style={{ marginBottom: 5 }}>
             <Skelette />
-          </View>
-          <View style={{ marginBottom: 5 }}>
-            <Skelette />
-          </View>
-          <View>
-            <Skelette last={true} />
-          </View>
         </View>
       }
 

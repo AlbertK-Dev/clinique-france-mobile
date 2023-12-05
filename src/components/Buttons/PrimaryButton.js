@@ -1,6 +1,6 @@
-import { Button } from 'native-base';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { Button } from 'react-native-paper';
 import { Alert } from 'react-native';
 
 
@@ -22,11 +22,7 @@ const PrimaryButton = ({
 
     return (
         <Button
-            _text={{
-                fontSize: 16
-            }}
-            isLoading={isLoading}
-            isLoadingText={isLoadingText}
+            loading={isLoading}
             onPress={onPress ?? handleOnPress}
             backgroundColor={color}
             minWidth={minWidth}

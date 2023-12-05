@@ -11,6 +11,13 @@ const styles = {
         fontWeight: '500'
     },
 
+    hStack:{
+        display:"flex",
+        flexDirection: "row",
+        gap:5,
+        alignItems: "center"
+    },
+
     medCenter: {
         color: colors.text_grey_hint,
         fontSize: 12

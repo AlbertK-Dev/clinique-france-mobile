@@ -16,10 +16,14 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: "row",
         alignItems: 'center',
+        padding:8,
     },
     section2: {
         flex: 1,
     },
+    item:{
+        marginBottom:18
+    }
 });
 
 export default styles;

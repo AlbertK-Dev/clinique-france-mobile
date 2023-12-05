@@ -1,43 +1,23 @@
-import { Foundation } from "@expo/vector-icons";
 import { Eye, EyeSlash, Lock, User, Warning2 } from "iconsax-react-native";
-import {
-  Center,
-  HStack,
-  Icon,
-  Input,
-  ScrollView,
-  Text,
-  VStack,
-  useToast,
-} from "native-base";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Image, Pressable, View } from "react-native";
+import { Image, Pressable, View, ScrollView, Text } from "react-native";
 import { useValidation } from "react-native-form-validator";
 import { connect, useDispatch, useSelector } from "react-redux";
 import logo from "../../../assets/img/hospi-rdv__9_-removebg-preview.png";
-import PrimaryButton from "../../../components/Buttons/PrimaryButton";
-import CustomToast from "../../../components/CustomToast";
 import colors from "../../../constants/colours";
 import * as SCREENS from "../../../constants/screens";
-import {
-  processVerifCode,
-  reinitialize,
-  userLogin,
-} from "../../../redux/User/action";
+import { reinitialize, userLogin } from "../../../redux/User/action";
 import { isEmailValid } from "../../../utils/helper";
 import styles from "./styles";
-import { Checkbox } from "react-native-paper";
+import { Checkbox, TextInput, Button } from "react-native-paper";
+import { Alert } from "react-native";
 
 const Login = ({ navigation, error, loading, errorMsg, success }) => {
-  const toast = useToast();
   const [errEmail, setErrMail] = useState(null);
   const [isEmpty, setIsEmpty] = useState(false);
   const errorCodeVerif = useSelector(
     (state) => state.UserReducer.errorCodeVerif
-  );
-  const codeVerifLoading = useSelector(
-    (state) => state.UserReducer.codeVerifLoading
   );
   const translate = useTranslation().t;
   const dispatch = useDispatch();
@@ -74,28 +54,21 @@ const Login = ({ navigation, error, loading, errorMsg, success }) => {
     dispatch(userLogin(formData));
   };
 
-  const resetPassword = () => {
-    setIsEmpty(true);
-    dispatch(processVerifCode({ email: formData?.email }));
-  };
-
   React.useEffect(() => {
     if ((error && errorMsg !== "") || errorCodeVerif || errEmail) {
-      toast.show({
-        render: () => {
-          return (
-            <CustomToast
-              message={errorMsg || errorCodeVerif || errEmail}
-              color={colors.danger}
-              bgColor={"red.100"}
-              icon={<Foundation name="alert" size={24} />}
-              iconColor={colors.danger}
-            />
-          );
-        },
-        placement: "top",
-        duration: 3000,
-      });
+      Alert.alert(
+        Platform.OS === "ios" ? "ECHEC DE CONNEXION" : "Echec de connexion",
+        errorMsg,
+        [
+          {
+            text: "Reesayer",
+            onPress: () => {
+              // navigation.navigate(SCREENS.LOGIN);
+              // dispatch({ type: REINITIALIZE });
+            },
+          },
+        ]
+      );
     }
     setErrMail(null);
   }, [error, success, errorCodeVerif, errEmail]);
@@ -107,31 +80,25 @@ const Login = ({ navigation, error, loading, errorMsg, success }) => {
           <Image style={styles.image} source={logo} alt="logo" />
           <Text style={styles.text1}>{translate("TEXT.LOGIN_TITRE")}</Text>
         </View>
-        <VStack space={4} style={styles.formContent}>
-          <Input
-            h={50}
-            rounded={50}
-            borderWidth={isEmpty && formData.email === "" ? 1 : 0}
-            borderColor={isEmpty ? colors.danger : ""}
-            fontSize={14}
-            bg={colors.desable}
-            InputLeftElement={
-              <VStack
-                alignItems={"center"}
-                justifyContent={"center"}
-                style={styles.leftElement}
-              >
-                <Icon as={<User />} size={5} color={"primary.500"} />
-              </VStack>
-            }
-            placeholder={translate("TEXT.EMAIL_FIELD")}
-            keyboardType="default"
-            isInvalid={isFieldInError("email")}
-            onChangeText={(value) => handleInputChange("email", value.trim())}
-            value={formData.email}
-          />
+        <View space={4} style={styles.formContent}>
+          <View style={styles.viewInput}>
+            <View style={styles.viewBoxIcon}>
+              <User color={colors.primary} size={24} name="person" />
+            </View>
+            <TextInput
+              outlineStyle={{ borderRadius: 50, borderColor: colors.desable }}
+              mode="outlined"
+              keyboardType="default"
+              style={styles.input}
+              outlineColor="white"
+              placeholder={translate("TEXT.EMAIL_FIELD")}
+              isInvalid={isFieldInError("email")}
+              onChangeText={(value) => handleInputChange("email", value.trim())}
+              value={formData.email}
+            />
+          </View>
           {isEmpty && formData.email === "" ? (
-            <HStack
+            <View
               rounded={5}
               p={1}
               backgroundColor={colors.transp_warning}
@@ -147,77 +114,55 @@ const Login = ({ navigation, error, loading, errorMsg, success }) => {
                 Veillez saisir votre email a fin de recevoir le code de
                 vérification
               </Text>
-            </HStack>
+            </View>
           ) : (
             formData.email !== "" &&
             !isEmailValid(formData.email) && (
-              <HStack
-                alignItems={"center"}
-                padding={2}
-                rounded={5}
-                p={1}
-                backgroundColor={colors.transp_warning}
-                space={1}
-              >
+              <View style={styles.warninBox}>
                 <Warning2 color={colors.danger} size={15} />
                 <Text
                   style={{
                     fontSize: 12,
                     color: colors.danger,
+                    marginLeft:5
                   }}
                 >
                   Mauvais format d'e-mail
                 </Text>
-              </HStack>
+              </View>
             )
           )}
-          <Input
-            rounded={50}
-            h={50}
-            borderWidth={0}
-            fontSize={14}
-            bg={colors.desable}
-            w={{ base: "100%", md: "100%" }}
-            InputLeftElement={
-              <VStack
-                alignItems={"center"}
-                justifyContent={"center"}
-                style={styles.leftElement}
-              >
-                <Icon as={<Lock />} size={5} color={"primary.500"} />
-              </VStack>
-            }
-            InputRightElement={
-              <Pressable onPress={() => setShow(!show)}>
-                <Icon
-                  as={show ? <Eye /> : <EyeSlash />}
-                  size={5}
-                  mr="4"
-                  color={colors.primary}
-                />
-              </Pressable>
-            }
-            type={show ? "text" : "password"}
-            placeholder="Entrer votre mot de passe"
-            onChangeText={(value) => handleInputChange("password", value)}
-            value={formData.password}
-          />
 
-          {/* {(isFieldInError("email") || isFieldInError("password")) && (
-            <Text style={styles.errorMsg}>Remplissez bien les champs !</Text>
-          )} */}
-
-          <HStack space={2} mt={1} alignItems={"center"}>
+          <View style={styles.viewInput}>
+            <View style={styles.viewBoxIcon}>
+              <Lock color={colors.primary} size={24} name="person" />
+            </View>
+            <TextInput
+              outlineStyle={{ borderRadius: 50, borderColor: colors.desable }}
+              mode="outlined"
+              keyboardType="default"
+              style={styles.input}
+              outlineColor="white"
+              placeholder="Mot de passe"
+              onChangeText={(value) => handleInputChange("password", value)}
+              value={formData.password}
+              secureTextEntry={show ? false : true}
+            />
+            <Pressable onPress={() => setShow(!show)}>
+              {show ? (
+                <Eye color={colors.primary} size={24} name="person" />
+              ) : (
+                <EyeSlash color={colors.primary} size={24} />
+              )}
+            </Pressable>
+          </View>
+          <View style={styles.cguBox}>
             <Checkbox
               aria-label="cgu"
-              // isChecked={formData.saveCredentials}
               status={formData.saveCredentials ? "checked" : "unchecked"}
               onPress={(v) => {
                 handleInputChange("saveCredentials", !formData.saveCredentials);
               }}
-              // onPress={() =>
-              //
-              // }
               color={colors.primary}
             />
             <Text
@@ -233,15 +178,10 @@ const Login = ({ navigation, error, loading, errorMsg, success }) => {
             >
               Se souvenir de moi
             </Text>
-          </HStack>
-        </VStack>
+          </View>
+        </View>
 
-        <Pressable
-          display={"flex"}
-          flexDirection={"row"}
-          alignItems={"center"}
-          justifyContent={"center"}
-        >
+        <Pressable style={{marginTop:15, marginBottom:15}}>
           <Text
             onPress={() =>
               navigation.navigate(SCREENS.PHONE_CONFIRMATION_SCREEN)
@@ -252,39 +192,50 @@ const Login = ({ navigation, error, loading, errorMsg, success }) => {
             Mot de passe oublié ?
           </Text>
         </Pressable>
-
-        <Center mt={2}>
-          <PrimaryButton
-            title={translate("TEXT.BUTTON_LOGIN")}
-            isLoadingText={translate("TEXT.BUTTON_LOGIN_LOADER")}
-            isLoading={loading}
+        <View>
+          <Button
+            children={
+              loading
+                ? translate("TEXT.BUTTON_LOGIN_LOADER")
+                : translate("TEXT.BUTTON_LOGIN")
+            }
+            labelStyle={{
+              color: "white",
+              fontSize: 18,
+            }}
+            loading={loading}
+            mode="contained"
             style={{
               ...styles.submitBtnText,
-              backgroundColor: isFieldsEmpty
-                ? colors.trans_primary
-                : colors.primary,
+              backgroundColor:
+                isFieldsEmpty || loading
+                  ? colors.trans_primary
+                  : colors.primary,
             }}
-            color={colors.primary}
-            onPress={handleSubmit}
-            disabled={isFieldsEmpty}
+            onPress={!loading && handleSubmit}
+            disabled={isFieldsEmpty || loading}
           />
-        </Center>
-        <Center>
-          <HStack mt={5}>
-            <Text style={styles.labelText}>Pas encore de compte?</Text>
-            <Text
-              style={[styles.forgetPassword, styles.registerText]}
-              onPress={() => {
-                dispatch(reinitialize());
-                navigation.navigate(SCREENS.SIGNUP);
-              }}
-              ml={1}
-            >
-              Inscrivez-vous !
-            </Text>
-          </HStack>
-        </Center>
-        {/*<SocialMedia/>*/}
+        </View>
+        <View
+          style={{
+            ...styles.cguBox,
+            marginTop:15,
+            justifyContent: "center",
+            alignContent: "center",
+            width: "100%",
+          }}
+        >
+          <Text style={styles.labelText}>Pas encore de compte? </Text>
+          <Text
+            style={[styles.forgetPassword, styles.registerText]}
+            onPress={() => {
+              dispatch(reinitialize());
+              navigation.navigate(SCREENS.SIGNUP);
+            }}
+          >
+            Inscrivez-vous!
+          </Text>
+        </View>
       </View>
     </ScrollView>
   );
