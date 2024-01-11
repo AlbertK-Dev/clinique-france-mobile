@@ -4,7 +4,7 @@ import { put, takeLatest } from "redux-saga/effects";
 import { getUnauthRequest, patchUnauthRequest } from "../../utils/api";
 
 function* getUserNotifications({ payload }) {
-  const url = `${BASE_URL}/notifications/?module=externe&iduser=${payload}`;
+  const url = `${BASE_URL}/notifications/?iduser=${payload}`;
   try {
     const result = yield getUnauthRequest(url);
 
@@ -19,12 +19,12 @@ function* getUserNotifications({ payload }) {
       type: types.GET_USER_NOTIFICATIONS_FAILED,
       payload: { message: error },
     });
-    console.error("...Something went wrong");
+    console.error("...Something went wrong", error.message);
   }
 }
 
 function* setNotifsCard({ payload }) {
-  const url = `${BASE_URL}/notifications/unread?module=externe&iduser=${payload}`;
+  const url = `${BASE_URL}/notifications/unread?&iduser=${payload}`;
   try {
     const result = yield getUnauthRequest(url);
     if (result.success) {
@@ -34,16 +34,16 @@ function* setNotifsCard({ payload }) {
       });
     }
   } catch (error) {
-    console.error("...Something went wrong");
+    console.error("...Something went wrong", error.message);
   }
 }
 
 function* markAllAsRead({ payload }) {
-  const url = `${BASE_URL}/notifications/?module=externe&iduser=${payload}`;
+  const url = `${BASE_URL}/notifications/?iduser=${payload}`;
   try {
     yield patchUnauthRequest(url);
   } catch (error) {
-    console.error("...Something went wrong");
+    console.error("...Something went wrong", error.message);
   }
 }
 

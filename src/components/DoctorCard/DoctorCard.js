@@ -10,7 +10,7 @@ const DoctorCard = ({ isEmpty = false, ...props }) => {
   const motifsLoading = useSelector((state) => state.RdvForm.motifsLoading);
 
   return (
-    <Pressable style={{ margin: 8 }} onPress={() => {}}>
+    <Pressable style={{ margin: 4 }} onPress={() => {}}>
       <Surface elevation={1} style={styles.medCard}>
         <View style={styles.medPic}>
         </View>

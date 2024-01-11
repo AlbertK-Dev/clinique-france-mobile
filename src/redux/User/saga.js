@@ -29,7 +29,7 @@ function* authRegister({ payload }) {
   const url = BASE_URL + USER_REGISTRATION;
 
   try {
-    const result = yield postUnauthRequest(url, payload);
+    const result = yield postUnauthRequest(`${url}?module=externe`, payload);
 
     if (result.success) {
       //yield AsyncStorage.setItem('access_token', result.data.access_token);
@@ -77,7 +77,7 @@ function* authUpdateInfo({ payload, _id }) {
 }
 
 function* setUserProfile({ payload, _id }) {
-  const url = BASE_URL + SET_PROFILE + _id + "?module=externe";
+  const url = BASE_URL + SET_PROFILE + _id;
   const formData = new FormData();
   formData.append("photo", {
     uri: payload.uri,
@@ -114,8 +114,7 @@ function* authLogin({ payload }) {
   const url = BASE_URL + USER_LOGIN;
 
   try {
-    const result = yield postUnauthRequest(url, payload);
-
+    const result = yield postUnauthRequest(`${url}?module=externe`, payload);
     if (result.success) {
       // save user credentials if asked
       yield AsyncStorage.setItem("access_token", result.data.access_token);
@@ -193,7 +192,7 @@ function* authLogout() {
 }
 
 function* processVerifCode({ data }) {
-  const url = BASE_URL + "/ext_users/process_verif_code/";
+  const url = BASE_URL + "/users/process_verif_code/";
   const payload =
     data?.register === true
       ? {
@@ -236,7 +235,7 @@ function* processVerifCode({ data }) {
 }
 
 function* resetPassWord({ data }) {
-  const url = BASE_URL + "/ext_users/" + data?.id;
+  const url = BASE_URL + "/users/" + data?.id;
   try {
     const result = yield patchUnauthRequest(url, { password: data?.password });
     if (result?.success) {
@@ -308,7 +307,8 @@ function* getDirections({ payload }) {
 }
 
 function* sendExpoToken({ payload }) {
-  const url = `${BASE_URL}/users/update-push-token/${payload._id}?module=externe`;
+  console.log(payload, "payload")
+  const url = `${BASE_URL}/users/update-push-token/${payload._id}`;
 
   try {
     const result = yield patchUnauthRequest(url, { token: payload.token });
@@ -320,7 +320,7 @@ function* sendExpoToken({ payload }) {
     }
     yield put({ type: types.SEND_EXPO_TOKEN_SUCCESS, payload: result.data });
   } catch (error) {
-    console.error("Something went wrong...", error);
+    console.error("Something went wrong...here", error.message);
   }
 }
 

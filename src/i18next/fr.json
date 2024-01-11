@@ -24,7 +24,7 @@
   "TEXT.CONDITION_GENERALE": "conditions générales d'utilisation ? ",
   "TEXT.ACCEP_CONDITION": "Vous acceptez nos ",
   "TEXT.ERROR_FIELDS": "Tous les champs sont obligatoires !",
-  "TEXT.LOGIN_TITRE": "Veuillez entrez votre email et votre un mot de passe",
+  "TEXT.LOGIN_TITRE": "Veuillez entrez votre email et votre mot de passe",
   "TEXT.EMAIL_FIELD": "Entrez votre email",
   "TEXT.EMAIL2_FIELD": "Adresse email",
   "TEXT.PASS_FIELD": "Entrez votre mot de passe",

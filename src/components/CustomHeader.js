@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
   },
 });
 
-const CustomHeader = ({ navigation, mb, userInfos, screen }) => {
+const CustomHeader = ({ navigation, mb, userInfos, screen, style }) => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
@@ -29,6 +29,7 @@ const CustomHeader = ({ navigation, mb, userInfos, screen }) => {
   return (
     <Surface
       style={{
+        ...style,
         justifyContent: "space-between",
         paddingHorizontal: 8,
         paddingVertical: 2,
@@ -51,7 +52,7 @@ const CustomHeader = ({ navigation, mb, userInfos, screen }) => {
       >
         <Pressable onPress={() => navigation.navigate(screen)}>
           <Avatar.Image
-            source={{ uri: user?.photo ?? null }}
+            source={{ uri: user?.photo || "https://www.ucf.edu/wp-content/blogs.dir/19/files/2019/12/Hospitality-Professional-At-Work-web.jpg" }}
             size={45}
             style={{ backgroundColor: colors.primary }}
           />

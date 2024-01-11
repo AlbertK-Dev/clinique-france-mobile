@@ -4,7 +4,7 @@ import { useTranslation } from "react-i18next";
 import { Image, Pressable, View, ScrollView, Text } from "react-native";
 import { useValidation } from "react-native-form-validator";
 import { connect, useDispatch, useSelector } from "react-redux";
-import logo from "../../../assets/img/hospi-rdv__9_-removebg-preview.png";
+import logo from "../../../assets/img/cf.png";
 import colors from "../../../constants/colours";
 import * as SCREENS from "../../../constants/screens";
 import { reinitialize, userLogin } from "../../../redux/User/action";

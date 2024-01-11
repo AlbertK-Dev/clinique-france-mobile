@@ -24,10 +24,15 @@ import {
   Text,
   ScrollView,
   Pressable,
+  Animated,
 } from "react-native";
 import messaging from "@react-native-firebase/messaging";
 import { setNotificationCardinal } from "../../redux/notifications/actions";
 import { Surface, TextInput, ActivityIndicator } from "react-native-paper";
+import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder'
+import LinearGradient from 'react-native-linear-gradient';
+const ShimmerPlaceholder = createShimmerPlaceholder(LinearGradient)
+
 
 const _spacing = 3;
 const datas = [
@@ -126,13 +131,14 @@ const Acceuil = ({
 
       let location = await ExpoLocation.getCurrentPositionAsync({});
       const { coords } = location;
+      console.log(coords)
       if (!address) dispatch(getAdressesFromCoords(coords));
     };
 
     requestLocationPermission();
   }, []);
   return (
-    <View flex={1}>
+    <View style={{ flex: 1 }}>
       <ScrollView
         showsVerticalScrollIndicator={false}
         paddingBottom={_spacing}
@@ -141,11 +147,14 @@ const Acceuil = ({
         <View style={styles.viewBoxEmplacment}>
           <Location color={colors.primary} />
           <View style={{ width: "100%", marginLeft: 10 }}>
-            <Text style={{ color: colors.text_grey_hint }}>
+            <Text style={{ color: colors.text_grey_hint, marginBottom: 5 }}>
               {translate("TEXT_EMPLACEMENT")}
             </Text>
             {!load_address && address && (
-              <ActivityIndicator color={colors.primary} size={14} animating={true}/>
+              <ShimmerPlaceholder
+                style={{ borderRadius: 10 }}
+                stopAutoRun
+              />
             )}
           </View>
         </View>
@@ -153,7 +162,7 @@ const Acceuil = ({
           <View style={styles.viewInput}>
             <SearchNormal1 color={colors.primary} name="person" />
             <TextInput
-              outlineStyle={{ borderRadius: 50, borderColor: colors.desable }}
+              outlineStyle={{ borderRadius: 50 }}
               mode="outlined"
               keyboardType="default"
               style={styles.input}
@@ -206,7 +215,7 @@ const Acceuil = ({
                   <Pressable
                     style={{
                       marginRight:
-                        index === props.specialties.length - 1 ? 5 : 0,
+                        index === props?.specialties?.length - 1 ? 5 : 0,
                       paddingVertical: 2,
                     }}
                   >
@@ -255,18 +264,16 @@ const Acceuil = ({
                 </Text>
               </Pressable>
             </View>
-            {props.praticiens.length !== 0 ? (
+            {props.praticiens?.length !== 0 ? (
               <>
                 {props.praticiens.slice(0, 5).map((item, index) => {
                   return (
                     <Pressable key={item._id}>
                       <DoctorCard
-                        speciality={item?.job?.label}
+                        speciality={item?.job?.title}
                         nom_complet={item.name + " " + item.surname}
                         clinique={
-                          item.affectation.length !== 0
-                            ? item?.affectation[0].label
-                            : ""
+                          item.telephone
                         }
                       />
                     </Pressable>
@@ -274,11 +281,13 @@ const Acceuil = ({
                 })}
               </>
             ) : (
-              <>
-                <DoctorCard key={1} isEmpty={true} />
-                <DoctorCard key={2} isEmpty={true} />
-                <DoctorCard key={3} isEmpty={true} />
-              </>
+              <View style={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center" }}>
+                {[1,2,3].map((c) => (<ShimmerPlaceholder
+                key={c}
+                  style={{ borderRadius: 10, width: "95%", height: 80, marginBottom: 10 }}
+                  stopAutoRun
+                />))}
+              </View>
             )}
           </View>
         </View>

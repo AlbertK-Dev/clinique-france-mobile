@@ -4,13 +4,13 @@ import colors from "../../constants/colours";
 const styles = StyleSheet.create({
     sectionTitle: {
         fontSize: 16,
-        fontWeight: 500,
+     //   fontWeight: 500,
         color: colors.text_grey_hint,
         marginBottom:8
     },
     medName: {
         fontSize: 14,
-        fontWeight: 600,
+      //  fontWeight: 600,
         color: colors.black,
     },
     profile: {
@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
 
     textCancelRdv:{
         color:colors.danger,
-        fontWeight:500,
+    //    fontWeight:500,
         marginLeft:5
     },
 

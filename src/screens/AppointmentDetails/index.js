@@ -166,7 +166,7 @@ const AppointmentDetails = ({ navigation, appointments }) => {
                   }}
                   onPress={() => setDisplSuppMod(true)}
                 >
-                  <Text color={colors.danger} fontWeight={500}>
+                  <Text color={colors.danger}>
                     Annuler
                   </Text>
                 </Button>
@@ -184,7 +184,7 @@ const AppointmentDetails = ({ navigation, appointments }) => {
                   }
                   backgroundColor={colors.primary}
                 >
-                  <Text color={colors.white} fontWeight={500}>
+                  <Text color={colors.white}>
                     Reporter
                   </Text>
                 </Button>
@@ -223,7 +223,7 @@ const AppointmentDetails = ({ navigation, appointments }) => {
               <View style={{ ...styles.paiementContainer }}>
                 <View style={styles.alert}>
                   <Danger color={colors.warning} size={22} />
-                  <Text style={{color:colors.warning, marginLeft:10, fontWeight:"500"}}>
+                  <Text style={{color:colors.warning, marginLeft:10,}}>
                     Votre paiement est incomplet.
                   </Text>
                 </View>

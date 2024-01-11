@@ -49,7 +49,7 @@ export default function ModaleChoixProfession({ navigation, onClose }) {
         <Text
           variant="bodyMedium"
           textAlign={"center"}
-          fontSize={"15"}
+          fontSize={15}
           fontWeight={"bold"}
         >
           Choisissez une profession pour votre RDV

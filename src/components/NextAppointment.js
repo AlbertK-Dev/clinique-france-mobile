@@ -18,8 +18,8 @@ const NextAppointment = (props) => {
     <View
       style={{
         backgroundColor: colors.primary,
-        marginHorizontal: 10,
-        padding: 8,
+        marginHorizontal: 5,
+        padding: 10,
         gap: 10,
         borderRadius: 10,
       }}
@@ -103,6 +103,7 @@ const styles = StyleSheet.create({
 
   mapBox:{
     width:40,
+    marginRight: 5,
     height:40,
     backgroundColor:colors.white,
     borderRadius:50,

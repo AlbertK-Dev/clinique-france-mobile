@@ -12,12 +12,14 @@ const Rdv = ({ _id, navigation, date, motif, startTime, praticien, status, local
         <View style={[styles.container]}>
             <View style={styles.topContainer}>
                 <View>
-                    <Text fontWeight='600' fontSize={16}>{"Dr. " + praticien}</Text>
+                    <Text fontWeight={"bold"} fontSize={16}>{"Dr. " + praticien}</Text>
                     <Text color={colors.text_grey_hint}>{"Genicologue"}</Text>
                 </View>
                 <Avatar.Image
                     size={40}
-                    source={null}></Avatar.Image>
+                    source={{
+                        uri: "https://www.ucf.edu/wp-content/blogs.dir/19/files/2019/12/Hospitality-Professional-At-Work-web.jpg"
+                    }}></Avatar.Image>
             </View>
             <View style={styles.infoContainer}>
                 <View style={styles.infoView}>

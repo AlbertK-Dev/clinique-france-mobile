@@ -2,7 +2,7 @@ import { connect, useDispatch } from "react-redux";
 import OnBoarding2 from "../../components/OnBoarding";
 import { NORMAL_TEXT_SIZE } from "../../constants/size";
 import { setApp } from "../../redux/commons/action";
-import logo from "../../assets/img/hospi-rdv__9_-removebg-preview.png";
+import logo from "../../assets/img/cf.png";
 import { useEffect, useState } from "react";
 import { Image, View } from "react-native";
 import { Text, ActivityIndicator } from "react-native-paper";
@@ -42,12 +42,12 @@ const Home = ({ loadingLocalAuth, localAuth }) => {
         //renderLogin(bypassOnboarding)
         <OnBoarding2 />
       ) : (
-        <View style={{flex:1, alignItems:'center',justifyContent:'center'}}>
+        <View style={{flex:1, alignItems:'center',justifyContent:'center', backgroundColor: "white"}}>
           <View space={2}>
-            <Image style={{height:250, width:300}} source={logo} alt="logo" />
+            <Image style={{height:100, width:100}} source={logo} alt="logo" />
               <ActivityIndicator color={colors.primary}/>
               <Text style={{color:colors.text_grey_hint, textAlign:'center'}}>
-                Patientez...
+                veillez Patienter ...
               </Text>
           </View>
         </View>

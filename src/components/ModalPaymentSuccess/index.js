@@ -35,7 +35,7 @@ const ModalPaySuccess = ({ isVisible, onClose, isLoader, title }) => {
               color: colors.white,
               fontSize: 28,
               textAlign: "center",
-              fontWeight: "600",
+              fontWeight: 600,
               marginBottom: 20,
             }}
           >

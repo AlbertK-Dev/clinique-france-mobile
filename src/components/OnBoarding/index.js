@@ -58,7 +58,7 @@ export default function OnBoarding2() {
   };
 
   return (
-    <View flex={1}>
+    <View flex={1} style={{backgroundColor: "white"}}>
       {currentIndex === 2 && (
         <CustomeFab
           navigation={navigation}

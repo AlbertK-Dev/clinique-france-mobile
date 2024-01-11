@@ -15,9 +15,7 @@ import { ajouterDuree, generateLink } from "../../utils/helper";
  * @description user sign up.
  */
 function* getMotifs({ data }) {
-  let url = data.forSpec
-    ? BASE_URL + "/motif/speciality/" + data?.id
-    : BASE_URL + "/motif/profession/" + data?.id;
+  let url = BASE_URL + "/motif/speciality/" + data?.id
   try {
     const result = yield getUnauthRequest(url);
     if (result.success) {
@@ -38,7 +36,7 @@ function* getMotifs({ data }) {
 }
 
 function* getSpecialities({ id }) {
-  let url = BASE_URL + "/ext_specialites/profession/" + id;
+  let url = BASE_URL + "/specialites/" + id;
   try {
     const result = yield getUnauthRequest(url);
     if (result.success) {
@@ -83,8 +81,7 @@ function* getCliniques({ id }) {
 function* getPraticiens({ data }) {
   let url =
     BASE_URL +
-    "/ext_users/lieu/?isPraticien=true&idLieu=" +
-    data?.id +
+    "/users/lieu/?isPraticien=true&idLieu="+
     "&idSpeciality=" +
     data?.ids;
   try {
@@ -108,7 +105,6 @@ function* getPraticiens({ data }) {
 
 function* getDispo({ data }) {
   let url = generateLink(BASE_URL + "/appointments/rechercher_dispo?", {
-    idCentre: data?.idCentre,
     idp: data?.idp,
     creneau: data?.creneau,
     date: data?.date,
@@ -134,9 +130,9 @@ function* getDispo({ data }) {
 }
 
 function* postRDV({ data }) {
-  let url1 = BASE_URL + "/patients/register?idCentre=" + data?.idCentre;
+  let url1 = BASE_URL + "/patients/register";
   let url2 =
-    BASE_URL + "/appointments/enregistrer_rdv/?idCentre=" + data?.idCentre;
+    BASE_URL + "/appointments/enregistrer_rdv/";
   const payload = {
     name: data?.user?.name,
     surname: data?.user?.surname ?? "",
@@ -145,7 +141,6 @@ function* postRDV({ data }) {
     email: data?.user.email,
     user: data?.user?._id,
     active: true,
-    idCentre: data?.idCentre,
   };
   try {
     const result = yield postUnauthRequest(url1, payload);
@@ -153,8 +148,6 @@ function* postRDV({ data }) {
     let rdv;
     if (result.message) {
       const rdvData = {
-        centre: data?.idCentre,
-        lieu: data?.lieu,
         practitioner: data?.praticien,
         patient: result.message,
         motif: data?.motif,
@@ -172,8 +165,6 @@ function* postRDV({ data }) {
       // RootNavigation.navigate(SCREENS.HOME_CONTAINER_ROUTE)
     } else if (result.data._id) {
       const rdvData = {
-        centre: data?.idCentre,
-        lieu: data?.lieu,
         practitioner: data?.praticien,
         patient: result.data._id,
         motif: data?.motif,
@@ -230,7 +221,7 @@ function* postRDV({ data }) {
 }
 
 function* getAllRdv({ id }) {
-  let url = BASE_URL + "/appointments/?module=externe&iduser=" + id;
+  let url = BASE_URL + "/appointments/?iduser=" + id;
 
   try {
     const result = yield getUnauthRequest(url);
@@ -247,13 +238,12 @@ function* getAllRdv({ id }) {
 
 function* putRDV({ data }) {
   let url =
-    BASE_URL + "/appointments/update/" + data.id + "?idCentre=" + data.idCentre;
+    BASE_URL + "/appointments/update/" + data.id;
 
   const payload = {
     startTime: data?.startTime,
     endTime: data?.endTime,
     date: data?.date,
-    centre: data?.idCentre,
     idUser: data?.idUser,
     date_long: data?.date_long,
   };
@@ -288,9 +278,8 @@ function* putRDV({ data }) {
 
 function* cancelRDV({ data }) {
   let url =
-    BASE_URL + "/appointments/update/" + data.id + "?idCentre=" + data.idCentre;
+    BASE_URL + "/appointments/update/" + data.id;
   const payload = {
-    centre: data?.idCentre,
     status: data?.status,
     idUser: data?.idUser,
   };

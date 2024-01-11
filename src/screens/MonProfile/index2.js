@@ -14,7 +14,7 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 import { RadioButton , Avatar} from "react-native-paper";
 import Header from "../../components/Header";
 import colors from "../../constants/colours";
-import DateTimePicker from "@react-native-community/datetimepicker";
+//import DateTimePickerModal from "react-native-modal-datetime-picker"
 import plus from "../../assets/img/edit.png";
 import tick from "../../assets/img/tick.png";
 import { LOGIN } from "../../constants/screens";
@@ -209,7 +209,7 @@ const MonProfile2 = ({ userInfos, loading, ImageLoading }) => {
           <View>
             <TouchableOpacity onPress={selectImage}>
               <View style={styles.viewStyle}>
-                <Avatar.Image size={95} source={{uri:ImageLoading ? image : user?.photo ?? image}} />
+                <Avatar.Image size={95} source={{uri:ImageLoading ? image : "https://www.ucf.edu/wp-content/blogs.dir/19/files/2019/12/Hospitality-Professional-At-Work-web.jpg" ?? image}} />
                 <View style={styles.iconCam}>
                   {ImageLoading ? (
                     <ActivityIndicator color={colors.primary} size={14}/>
@@ -313,15 +313,15 @@ const MonProfile2 = ({ userInfos, loading, ImageLoading }) => {
                   </TouchableOpacity>
                 )}
 
-                {showDatePicker && (
-                  <DateTimePicker
+                {/**showDatePicker && (
+                  <DateTimePickerModal
                     accentColor={colors.primary}
                     value={moment(formData.birthdate).toDate()} // Convertir en objet Date
                     mode="date"
                     display="default"
                     onChange={handleDateChange}
                   />
-                )}
+                )*/}
               </View>
 
               <View

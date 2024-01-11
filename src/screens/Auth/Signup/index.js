@@ -8,7 +8,7 @@ import {
   Text,
   Pressable,
 } from "react-native";
-import DateTimePicker from "@react-native-community/datetimepicker";
+//import DateTimePickerModal from "react-native-modal-datetime-picker"
 import logo from "../../../assets/img/hospi-rdv__9_-removebg-preview.png";
 import PrimaryButton from "../../../components/Buttons/PrimaryButton";
 import colors from "../../../constants/colours";
@@ -422,9 +422,9 @@ const Signup = ({ navigation, error, successRegister, codeVerifLoading }) => {
                   </Text>
                 </View>
               </TouchableOpacity>
-              {showDatePicker && (
-                <DateTimePicker
-                  testID="dateTimePicker"
+              {/**showDatePicker && (
+                <DateTimePickerModal
+                  testID="DateTimePickerModal"
                   value={moment(date, "DD/MM/YYYY").toDate()}
                   mode="date"
                   display="default"
@@ -434,7 +434,7 @@ const Signup = ({ navigation, error, successRegister, codeVerifLoading }) => {
                   onChange={handleDateChange}
                   style={{ backgroundColor: colors.primary }}
                 />
-              )}
+              )*/}
             </View>
             <View style={styles.cguBox}>
               <Checkbox

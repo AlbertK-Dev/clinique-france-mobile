@@ -78,11 +78,11 @@ const styles = StyleSheet.create({
   },
   nextDispoLabel: {
     fontSize: 17,
-    fontWeight: 500,
+ //   fontWeight: 500,
   },
   rdvDayLabel: {
     fontSize: 15,
-    fontWeight: 500,
+   // fontWeight: 500,
     color: colors.text_grey_hint,
     marginBottom: 5,
   },
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
   },
   rdvHoureLabel: {
     fontSize: 15,
-    fontWeight: 500,
+  //  fontWeight: 500,
     color: colors.text_grey_hint,
     marginBottom: 10,
   },

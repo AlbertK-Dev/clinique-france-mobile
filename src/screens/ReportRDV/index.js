@@ -4,7 +4,7 @@ import { View, ScrollView, Pressable } from "react-native";
 import colors from "../../constants/colours";
 import CardInfo from "../../components/CardInfo";
 import moment from "moment";
-import DateTimePicker from "@react-native-community/datetimepicker";
+//import DateTimePickerModal from "react-native-modal-datetime-picker"
 import styles from "./style";
 import {
   ajouterDuree,
@@ -184,9 +184,9 @@ export const ReportRDV = ({ route, navigation }) => {
                     <Text style={{ fontSize: 15 }}>{date}</Text>
                   </View>
                 </Pressable>
-                {showDate && (
-                  <DateTimePicker
-                    testID="dateTimePicker"
+                {/**showDate && (
+                  <DateTimePickerModal
+                    testID="DateTimePickerModal"
                     value={new Date()}
                     mode="date"
                     display="default"
@@ -198,7 +198,7 @@ export const ReportRDV = ({ route, navigation }) => {
                     accentColor={colors.primary}
                     style={{ backgroundColor: colors.primary }}
                   />
-                )}
+                  )*/}
               </View>
               <View
                 style={{
@@ -392,7 +392,6 @@ export const ReportRDV = ({ route, navigation }) => {
             <Text
               color={colors.white}
               style={styles.btnSubmitText}
-              fontWeight="500"
             >
               {putingRdv ? "chargement..." : "Reporter le rendez-vous"}
             </Text>

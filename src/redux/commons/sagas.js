@@ -6,7 +6,7 @@ import { put, takeLatest } from 'redux-saga/effects';
 
 function* getAppSpecialties() {
     try {
-        const url = BASE_URL + '/specialites/?module=externe'
+        const url = BASE_URL + '/specialites/'
         const res = yield getUnauthRequest(url)
 
         if (res.success) {

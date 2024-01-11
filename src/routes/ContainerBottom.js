@@ -16,7 +16,7 @@ const Bottom = createBottomTabNavigator();
 const setScreenOption = ({ route }) => ({
   headerShown: true,
   header: ({ navigation, route, options }) => {
-    return <CustomHeader navigation={navigation} screen={SCREENS.PROFILE} />;
+    return <CustomHeader style={{marginTop: 30}} navigation={navigation} screen={SCREENS.PROFILE} />;
   },
   tabBarIcon: ({ focused }) => {
     if (route.name === SCREENS.ACCEUIL)

@@ -38,7 +38,7 @@ export default function Paginator({ data, scrollX }) {
 
 const styles = StyleSheet.create({
   dot: {
-    height: 6,
+    height: 3,
     borderRadius: 5,
     backgroundColor: colors.primary,
     marginHorizontal: 8,

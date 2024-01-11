@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     },
     medName: {
         fontSize: 14,
-        fontWeight: 600,
+//        fontWeight: 600,
         color: colors.black
     },
     label: {

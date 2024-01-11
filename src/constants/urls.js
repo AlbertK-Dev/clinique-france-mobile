@@ -1,10 +1,10 @@
-export const BASE_URL = "https://marque-blanche-bo-backnd.vercel.app";
+export const BASE_URL = "http://192.168.43.35:3500";
 //export const BASE_URL = "http://192.168.43.5:3500";
 //donald serveur:
 //export const BASE_URL = "http://192.168.1.50:3500";
 
 const USER = "/ext_users";
-export const USER_REGISTRATION = USER + "/register";
+export const USER_REGISTRATION = "/register";
 export const USER_LOGIN = USER + "/signin";
 export const USER_LOGOUT = USER + "/logout";
 export const USER_LOCAL_AUTH = "/verifyToken";

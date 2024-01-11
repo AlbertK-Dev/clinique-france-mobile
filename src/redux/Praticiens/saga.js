@@ -5,7 +5,7 @@ import { getUnauthRequest } from '../../utils/api';
 
 
 function* getAllPraticiens() {
-    let url = BASE_URL + '/ext_users/?isPraticien=true'
+    let url = BASE_URL + '/users/?isPraticien=true'
     try {
         const result = yield getUnauthRequest(url);
         if (result.success) {
@@ -21,7 +21,7 @@ function* getAllPraticiens() {
 }
 
 function* searchPratsByKey({ key }) {
-    let url = BASE_URL + '/ext_users/searchBySpeciality/' + key
+    let url = BASE_URL + '/users/searchBySpeciality/' + key
     try {
         const result = yield getUnauthRequest(url);
         if (result.success) {

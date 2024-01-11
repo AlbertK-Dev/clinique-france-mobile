@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 3,
+      height: 1,
     },
     shadowOpacity: 0.01,
     shadowRadius: 3.84,
@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     paddingLeft: 10,
     alignItems: "center",
     justifyItems: "center",
-    backgroundColor: colors.desable,
+    backgroundColor: colors.white,
     borderRadius:50,
     marginTop:10,
     marginBottom:10
@@ -59,9 +59,9 @@ const styles = StyleSheet.create({
   input: {
     fontSize: 16,
     width: "80%",
-    height: 43,
+    height: 35,
     marginVertical: 5,
-    backgroundColor: colors.desable,
+    backgroundColor: colors.white,
     borderTopRightRadius: 80,
   },
 
@@ -72,7 +72,10 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     flexDirection:"column",
     paddingVertical:10,
+    marginHorizontal: -5,
     backgroundColor: colors.white,
+    borderTopLeftRadius: 15,
+    borderTopRightRadius: 15,
     borderBottomLeftRadius:15,
     borderBottomRightRadius:15
   },

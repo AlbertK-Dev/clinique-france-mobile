@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white'
 
   },
-  image: { width: 200, height: 150, marginTop: 20 },
+  image: { width: 150, height: 150, marginTop: 30 },
   errorMsg: {
     color: "red",
     fontSize: 14,

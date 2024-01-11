@@ -15,7 +15,7 @@ export default function OnBoardingItem({ item, scrollX, ...props }) {
         <Image
           source={props.image}
           resizeMode="center"
-          style={{ width: "100%", height: 230 }}
+          style={{ width: "70%", height: 230 }}
         />
       </View>
       <View>
