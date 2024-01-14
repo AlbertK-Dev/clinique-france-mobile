@@ -26,7 +26,7 @@ function Success({ route }) {
 
   return (
       <View style={{ ...styles.contenair }}>
-        <Surface elevation={5} style={{backgroundColor:colors.primary, padding:10, borderRadius:15}}>
+        <Surface elevation={5} style={{backgroundColor:colors.primary, height: "70%", padding:10, borderRadius:15}}>
         <View  style={styles.box1}>
           <TickCircle size="130" color={colors.white} variant="Bold"/>
           <Text style={styles.texte1}>Rendez-vous pris avec success</Text>
@@ -87,7 +87,7 @@ function Success({ route }) {
           textColor={colors.primary}
           onPress={() => navigation.navigate(SCREENS.RDV_CONTAINER)}
         >
-          Voir mes rendez-vous
+          VOIR VOS RENDEZ-VOUS
         </Button>
         </Surface>
       </View>

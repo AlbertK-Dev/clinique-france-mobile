@@ -5,6 +5,7 @@ const styles = {
         borderRadius: 10,
         padding: 10,
         borderWidth: 0.5,
+        marginRight: 10
     },
 
     medName: {

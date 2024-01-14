@@ -10,6 +10,7 @@ import * as RootNavigation from "../../routes/rootNavigation";
 import * as SCREENS from "../../constants/screens";
 import { MY_FICHES, SETIDCENTRE } from "../commons/types";
 import { ajouterDuree, generateLink } from "../../utils/helper";
+import { GET_USER_NOTIFICATIONS_REQUEST, SET_NOTIFICATION_CARDINAL, SET_NOTIFICATION_CARDINAL_SUCCESS } from "../notifications/types";
 
 /**
  * @description user sign up.
@@ -36,9 +37,10 @@ function* getMotifs({ data }) {
 }
 
 function* getSpecialities({ id }) {
-  let url = BASE_URL + "/specialites/" + id;
+  let url = BASE_URL + "/specialites/";
   try {
     const result = yield getUnauthRequest(url);
+    console.log(result)
     if (result.success) {
       yield put({
         type: types.GET_SPECIALITIES_REQUEST_SUCCESS,
@@ -79,9 +81,10 @@ function* getCliniques({ id }) {
 }
 
 function* getPraticiens({ data }) {
+  console.log(data)
   let url =
     BASE_URL +
-    "/users/lieu/?isPraticien=true&idLieu="+
+    "/users/speciality/?idSpeciality="+data
     "&idSpeciality=" +
     data?.ids;
   try {
@@ -110,6 +113,7 @@ function* getDispo({ data }) {
     date: data?.date,
     day: data?.day,
   });
+  console.log(url)
   try {
     const result = yield getUnauthRequest(url);
     if (result.success) {
@@ -130,43 +134,15 @@ function* getDispo({ data }) {
 }
 
 function* postRDV({ data }) {
-  let url1 = BASE_URL + "/patients/register";
   let url2 =
     BASE_URL + "/appointments/enregistrer_rdv/";
-  const payload = {
-    name: data?.user?.name,
-    surname: data?.user?.surname ?? "",
-    birthdate: data?.user.birthdate,
-    telephone: data?.user.telephone,
-    email: data?.user.email,
-    user: data?.user?._id,
-    active: true,
-  };
+  // user: data?.user?._id,
   try {
-    const result = yield postUnauthRequest(url1, payload);
-    let idFiche;
     let rdv;
-    if (result.message) {
+     if (data?.user?._id) {
       const rdvData = {
         practitioner: data?.praticien,
-        patient: result.message,
-        motif: data?.motif,
-        startTime: data?.period?.time,
-        endTime: ajouterDuree(data?.period?.time, data?.duration_rdv),
-        provenance: "mobile",
-        duration: data?.duration_rdv,
-        date_long: data?.date_long,
-        // "dayOfWeek": 1,
-        date: data?.period?.day,
-      };
-      idFiche = result.message;
-      rdv = yield postUnauthRequest(url2, rdvData);
-      // yield put({ type: types.GET_DISPO_REQUEST_SUCCESS, payload: result.data })
-      // RootNavigation.navigate(SCREENS.HOME_CONTAINER_ROUTE)
-    } else if (result.data._id) {
-      const rdvData = {
-        practitioner: data?.praticien,
-        patient: result.data._id,
+        patient: data?.user?._id,
         motif: data?.motif,
         startTime: data?.period?.time,
         // data?.period?.time,
@@ -177,13 +153,11 @@ function* postRDV({ data }) {
         // "dayOfWeek": 1,
         date: data?.period?.day,
       };
-      idFiche = result.data?._id;
       rdv = yield postUnauthRequest(url2, rdvData);
     } else {
-
       yield put({
         type: types.POST_RDV_REQUEST_FAILED,
-        payload: "Erreur lors de la creation du rendez-vous!",
+        payload: "Certains champs n'ont pas bien ete renseignes",
       });
       yield setTimeout(() => {
         //RootNavigation.navigate(SCREENS.ACCEUIL)
@@ -195,8 +169,9 @@ function* postRDV({ data }) {
         type: types.POST_RDV_REQUEST_SUCCESS,
         payload: rdv?.data[0],
       });
-      yield put({ type: types.GET_ALL_MY_RDV, id: payload.user });
-      yield put({ type: MY_FICHES, payload: idFiche });
+      yield put({ type: types.GET_ALL_MY_RDV, id: data?.user?._id });
+      yield put({ type: GET_USER_NOTIFICATIONS_REQUEST, payload: data?.user?._id });
+      yield put({ type: SET_NOTIFICATION_CARDINAL, payload: data?.user?._id });
       yield setTimeout(() => {
         put({ type: "CLEAR_ERR_SUCC" });
         RootNavigation.navigate(SCREENS.SUCCESS, { id: rdv?.data?._id });
@@ -253,6 +228,8 @@ function* putRDV({ data }) {
       yield put({ type: types.PUT_RDV_REQUEST_SUCCESS, payload: result.data });
       //yield put({ type: types.GET_ALL_MY_RDV, id: payload?.idUser })
       yield getAllRdv({ id: payload.idUser });
+      yield put({ type: GET_USER_NOTIFICATIONS_REQUEST, payload: payload.idUser });
+      yield put({ type: SET_NOTIFICATION_CARDINAL, payload: payload.idUser });
       setTimeout(() => {
         put({ type: "CLEAR_ERR_SUCC" });
       }, 1000);
@@ -292,6 +269,8 @@ function* cancelRDV({ data }) {
       });
       //yield put({ type: types.GET_ALL_MY_RDV, id: payload?.idUser })
       yield getAllRdv({ id: payload.idUser });
+      yield put({ type: GET_USER_NOTIFICATIONS_REQUEST, payload: payload.idUser });
+      yield put({ type: SET_NOTIFICATION_CARDINAL, payload: payload.idUser });
       setTimeout(() => {
         put({ type: "CLEAR_ERR_SUCC" });
       }, 1000);

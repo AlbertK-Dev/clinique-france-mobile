@@ -4,6 +4,7 @@ let initialState = {
     shouldSeeBehind: false,
     mesFiches: [],
     loading: false,
+    specialties: []
 };
 
 const common = (state = initialState, action) => {

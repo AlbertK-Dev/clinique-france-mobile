@@ -9,7 +9,7 @@ import { Surface, Text } from "react-native-paper";
 export default function Header({ title, bg }) {
   const navigation = useNavigation();
   return (
-    <Surface elevation={3} style={{ ...styles.constainer, backgroundColor: bg ?? colors.white, marginTop: 30 }}>
+    <Surface elevation={3} style={{ ...styles.constainer, backgroundColor: bg ?? colors.white, marginTop: 20 }}>
         <ArrowLeft size={25} color={colors.primary} onPress={()=>navigation.goBack()}/>
       <View
         justifyContent={"center"}

@@ -17,7 +17,8 @@ const styles = StyleSheet.create({
         justifyContent:'center'
     },
     reportBtn: {
-        backgroundColor: colors.trans_primary,
+        backgroundColor: colors.primary,
+        color: "white",
         height: 40,
         display: "flex",
         flexDirection: "row",

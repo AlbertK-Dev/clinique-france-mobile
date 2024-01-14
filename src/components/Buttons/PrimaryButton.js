@@ -6,6 +6,7 @@ import { Alert } from 'react-native';
 
 const PrimaryButton = ({
     title,
+    textColor = "white",
     onPress,
     isLoading = false,
     isLoadingText = 'Submitting',
@@ -28,6 +29,7 @@ const PrimaryButton = ({
             minWidth={minWidth}
             style={[style ? style : {}]}
             disabled={disabled}
+            textColor={textColor}
             {...rest}>
             {title}
         </Button>

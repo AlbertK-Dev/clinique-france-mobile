@@ -7,18 +7,20 @@ import * as SCREENS from '../../constants/screens'
 import { Calendar, DocumentText, Location, Map1, Timer1 } from 'iconsax-react-native'
 import { transfomeToSlashDate } from '../../utils/helper'
 
-const Rdv = ({ _id, navigation, date, motif, startTime, praticien, status, localisation }) => {
+const Rdv = ({ _id, navigation, date, motif, startTime, praticien, status, localisation, backgroundColor = null }) => {
     return (
         <View style={[styles.container]}>
             <View style={styles.topContainer}>
                 <View>
-                    <Text fontWeight={"bold"} fontSize={16}>{"Dr. " + praticien}</Text>
+                    <Text style={{fontWeight: "bold"}} fontSize={16}>{"Dr. " + praticien}</Text>
                     <Text color={colors.text_grey_hint}>{"Genicologue"}</Text>
                 </View>
                 <Avatar.Image
                     size={40}
+                    style={{backgroundColor}}
                     source={{
-                        uri: "https://www.ucf.edu/wp-content/blogs.dir/19/files/2019/12/Hospitality-Professional-At-Work-web.jpg"
+                        uri: "https://www.fake.jpg",
+                        
                     }}></Avatar.Image>
             </View>
             <View style={styles.infoContainer}>
@@ -29,7 +31,7 @@ const Rdv = ({ _id, navigation, date, motif, startTime, praticien, status, local
                     </View>
                     <View style={styles.left}>
                         <Location color={colors.text_grey_hint} size={22} />
-                        <Text numberOfLines={1} ellipsizeMode='tail' style={styles.infoText}>{"Clinique FOUDA"}</Text>
+                        <Text numberOfLines={1} ellipsizeMode='tail' style={styles.infoText}>{"Clinique de France"}</Text>
                     </View>
                 </View>
                 <View style={styles.infoView}>
@@ -46,7 +48,7 @@ const Rdv = ({ _id, navigation, date, motif, startTime, praticien, status, local
                     {localisation && <Pressable style={styles.mapBtn} onPress={() => navigation.navigate(SCREENS.GOOGLE_MAP, { localisation })}>
                         <Map1 color={colors.primary} />
                     </Pressable>}
-                    <Button onPress={() => navigation.navigate(SCREENS.APPOINTMENT_DETAILS_SCREEN, { _id: _id })} textColor={colors.primary} style={styles.reportBtn}>
+                    <Button onPress={() => navigation.navigate(SCREENS.APPOINTMENT_DETAILS_SCREEN, { _id: _id })} textColor={colors.white} style={styles.reportBtn}>
                         Afficher
                     </Button>
                 </View>

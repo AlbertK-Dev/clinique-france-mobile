@@ -52,7 +52,7 @@ function* authRegister({ payload }) {
 }
 
 function* authUpdateInfo({ payload, _id }) {
-  const url = BASE_URL + USER_INFO_UPDATE + "/" + _id;
+  const url = BASE_URL + USER_INFO_UPDATE + "/" + _id+'?module=externe';
   try {
     const result = yield patchUnauthRequest(url, payload);
     if (result.success) {
@@ -77,7 +77,7 @@ function* authUpdateInfo({ payload, _id }) {
 }
 
 function* setUserProfile({ payload, _id }) {
-  const url = BASE_URL + SET_PROFILE + _id;
+  const url = BASE_URL + SET_PROFILE + _id+'?module=externe';
   const formData = new FormData();
   formData.append("photo", {
     uri: payload.uri,
@@ -87,7 +87,9 @@ function* setUserProfile({ payload, _id }) {
 
   try {
     const result = yield putRequestFormData(url, formData);
+    console.log(result)
     if (result.success) {
+      console.log("succ upl ph")
       yield AsyncStorage.setItem(
         "userInfos",
         JSON.stringify({ user: result.data })
@@ -97,6 +99,7 @@ function* setUserProfile({ payload, _id }) {
         payload: { user: result.data },
       });
     } else {
+      console.log("err here")
       yield put({
         type: types.SET_USER_PROFIL_SUCCESS_FAILED,
         payload: result.message,

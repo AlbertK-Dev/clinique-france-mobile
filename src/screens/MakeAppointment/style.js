@@ -3,6 +3,7 @@ import colors from "../../constants/colours";
 const styles = {
     container: {
         padding: 20,
+        backgroundColor: "white",
     },
 
     header: {
@@ -10,7 +11,9 @@ const styles = {
         justifyContent: 'space-between',
         display:"flex",
         flexDirection:'row',
-        alignItems:'center'
+        alignItems:'center',
+        marginBottom: 10,
+        marginTop: 10
     },
 
     headerTitle: {
@@ -73,12 +76,13 @@ const styles = {
         padding: 10,
         borderRadius: 10,
         borderColor: colors.text_grey_hint,
-        borderWidth: 0.5
+        borderWidth: 0.5,
+        marginRight: 5
     },
 
     prev: {
-        height: 25,
-        width: 25,
+        height: 30,
+        width: 30,
         backgroundColor: colors.trans_primary,
         alignItems: 'center',
         justifyContent: 'center',

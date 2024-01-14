@@ -10,6 +10,7 @@ import colors from "../../constants/colours";
 import { Pressable, TouchableOpacity, View } from "react-native";
 import BottomSheet from "./bottomSheet";
 import { FlashList } from "@shopify/flash-list";
+import ShimmerPlaceholder from "react-native-shimmer-placeholder";
 
 const MesRdv = ({ navigation }) => {
   const listRef = useRef()
@@ -225,17 +226,26 @@ const MesRdv = ({ navigation }) => {
                   status={item?.status}
                   startTime={item?.displayedDate}
                   motif={item?.motif}
+                  backgroundColor={item?.backgroundColor}
                 />
               </View>)
             }}
           />
         </View>
       )}
+    {/** loadingRDV || globalState.showSkeleton */}
+      { (loadingRDV || globalState.showSkeleton) &&
+        (<View style={{ padding: 10, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center"}}>
+          <ShimmerPlaceholder
+            style={{ borderRadius: 10, height: 180, width: "98%", marginBottom: 10 }}
+            stopAutoRun
+          />
+          <ShimmerPlaceholder
+            style={{ borderRadius: 10, height: 100, width: "98%" }}
+            stopAutoRun
+          />
 
-      {loadingRDV || globalState.showSkeleton &&
-        <View style={{ padding: 10 }}>
-            <Skelette />
-        </View>
+        </View>)
       }
 
       {(appointments.length === 0 && !globalState.showSkeleton) &&
@@ -245,7 +255,7 @@ const MesRdv = ({ navigation }) => {
         </View>
       }
 
-      <BottomSheet
+      {/**<BottomSheet
         memoizedSorted={memoizedSorted}
         isOpen={isOpen}
         close={handleChange}
@@ -253,7 +263,7 @@ const MesRdv = ({ navigation }) => {
         order={order}
         setFilterBy={filterChange}
         setOrder={orderChange}
-      />
+    /> */}
     </View>
   );
 }

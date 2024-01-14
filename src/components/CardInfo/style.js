@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     },
     textColor:{
         color:colors.primary,
-        fontSize:16
+        fontSize:15
     },
     iconTextConsigne:{
         display: "flex", 

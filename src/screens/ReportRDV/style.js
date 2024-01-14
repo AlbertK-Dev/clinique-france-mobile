@@ -128,6 +128,7 @@ const styles = StyleSheet.create({
   },
   btnSubmitText: {
     fontSize: 16,
+    color: colors.white
   },
   btnContainer: {
     width: "100%",

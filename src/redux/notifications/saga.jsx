@@ -7,7 +7,7 @@ function* getUserNotifications({ payload }) {
   const url = `${BASE_URL}/notifications/?iduser=${payload}`;
   try {
     const result = yield getUnauthRequest(url);
-
+    console.log("got nitfs ", url)
     if (result.success) {
       yield put({
         type: types.GET_USER_NOTIFICATIONS_SUCCESS,
@@ -27,6 +27,7 @@ function* setNotifsCard({ payload }) {
   const url = `${BASE_URL}/notifications/unread?&iduser=${payload}`;
   try {
     const result = yield getUnauthRequest(url);
+    console.log("set notifs ", url)
     if (result.success) {
       yield put({
         type: types.SET_NOTIFICATION_CARDINAL_SUCCESS,

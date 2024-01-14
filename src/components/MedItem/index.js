@@ -33,18 +33,18 @@ const MedItem = ({ value, infosPraticien, handleChange, index, trigger, infosCli
                 style={{
                     ...styles.medBox,
                     backgroundColor: isSelected ? colors.trans_primary : 'transparent',
-                    borderColor: isSelected ? colors.trans_primary : colors.text_grey_hint, gap:5
+                    borderColor: isSelected ? colors.trans_primary : colors.primary, gap:5
                 }}>
                 <View style={styles.hStack}>
-                    <Hospital color={colors.black} />
-                    <Text ml={1} style={styles.medName}>{infosPraticien ? "Dr " + infosPraticien.name : infosClinique.label}</Text>
+                    <Hospital size={17} color={colors.primary} />
+                    <Text ml={1} style={{...styles.medName, color: colors.primary}}>{infosPraticien ? "Dr " + infosPraticien.name : infosClinique.label}</Text>
                 </View>
                 <View style={styles.hStack}>
-                <Location  color={colors.black} />
+                <Location size={17} color={colors.black} />
                     <Text ml={1} style={styles.medCenter}>{infosPraticien ? infosPraticien.email : infosClinique.ville + " - " + infosClinique?.region}</Text>
                 </View>
                 <View style={styles.hStack}>
-                <MoneySend color={colors.yellow}/>
+                <MoneySend size={17} color={colors.yellow}/>
                     <Text ml={1} style={styles.medTax}>{infosPraticien ? infosPraticien.telephone : "500000 fcfa"}</Text>
                 </View>
             </View>

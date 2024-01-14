@@ -157,7 +157,7 @@ const AppointmentDetails = ({ navigation, appointments }) => {
             ) : (
               <View style={{ ...styles.hStack }}>
                 <Button
-                  textColor={colors.black}
+                  textColor={colors.danger}
                   loading={cancellLoading}
                   style={{
                     ...styles.button,
@@ -203,7 +203,7 @@ const AppointmentDetails = ({ navigation, appointments }) => {
             date={appointment?.displayedDate}
           />
 
-          <View space={2}>
+          {/** <View space={2}>
             <View
               style={{ ...styles.hStack, paddingVertical: 15 }}
               justifyContent={"space-between"}
@@ -255,7 +255,7 @@ const AppointmentDetails = ({ navigation, appointments }) => {
                 </View>
               </View>
             )}
-          </View>
+            </View> */}
         </View>
       </ScrollView>
     </View>

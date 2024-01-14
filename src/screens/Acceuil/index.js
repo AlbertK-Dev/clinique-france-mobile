@@ -27,7 +27,7 @@ import {
   Animated,
 } from "react-native";
 import messaging from "@react-native-firebase/messaging";
-import { setNotificationCardinal } from "../../redux/notifications/actions";
+import { getUserNotifications, setNotificationCardinal } from "../../redux/notifications/actions";
 import { Surface, TextInput, ActivityIndicator } from "react-native-paper";
 import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder'
 import LinearGradient from 'react-native-linear-gradient';
@@ -63,10 +63,13 @@ const Acceuil = ({
     const results = [...filteredSpecialites, ...filteredPraticiens];
     setSearchResults(results);
   };
+  const notifications = useSelector((state) => state.Notifications.notifications);
+
 
   useEffect(() => {
     dispatch(setShouldSeeBehind(false));
     dispatch(getProfession());
+    if(notifications.length == 0) dispatch(getUserNotifications(userInfos?.user?._id))
     dispatch(clearCache());
     dispatch(getAllPrats());
     dispatch(getAppSpecialties());
@@ -137,6 +140,7 @@ const Acceuil = ({
 
     requestLocationPermission();
   }, []);
+
   return (
     <View style={{ flex: 1 }}>
       <ScrollView
@@ -150,12 +154,15 @@ const Acceuil = ({
             <Text style={{ color: colors.text_grey_hint, marginBottom: 5 }}>
               {translate("TEXT_EMPLACEMENT")}
             </Text>
-            {!load_address && address && (
-              <ShimmerPlaceholder
-                style={{ borderRadius: 10 }}
-                stopAutoRun
-              />
-            )}
+            {(!load_address && address) ? (
+              <Text fontWeight="600">
+                {address.address.road + " " + address.address.city}
+              </Text>
+
+            ) : <ShimmerPlaceholder
+              style={{ borderRadius: 10 }}
+              stopAutoRun
+            />}
           </View>
         </View>
         <View style={{ margin: 10 }}>
@@ -228,15 +235,18 @@ const Acceuil = ({
                 );
               }}
             />
-            {!props.specialties && (
-              <View>
+            {!props.specialties.length > 0 && (
+              <View style={{ display: "flex", flexDirection: "row" }}>
                 {datas.map((d) => (
                   <View
                     key={d.key}
                     paddingY={_spacing}
                     marginLeft={_spacing - 1}
                   >
-                    <ActivityIndicator color={colors.primary} size={15} animating={true} />
+                    <ShimmerPlaceholder
+                      style={{ borderRadius: 20, width: 150, height: 40 }}
+                      stopAutoRun
+                    />
                   </View>
                 ))}
               </View>
@@ -282,8 +292,8 @@ const Acceuil = ({
               </>
             ) : (
               <View style={{ width: "100%", display: "flex", flexDirection: "column", alignItems: "center" }}>
-                {[1,2,3].map((c) => (<ShimmerPlaceholder
-                key={c}
+                {[1, 2, 3].map((c) => (<ShimmerPlaceholder
+                  key={c}
                   style={{ borderRadius: 10, width: "95%", height: 80, marginBottom: 10 }}
                   stopAutoRun
                 />))}

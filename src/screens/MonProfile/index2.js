@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import {ActivityIndicator} from "react-native-paper";
+import { ActivityIndicator } from "react-native-paper";
 import { useState } from "react";
 import {
   Image,
@@ -9,9 +9,10 @@ import {
   Text,
   View,
   ScrollView,
+  Dimensions,
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
-import { RadioButton , Avatar} from "react-native-paper";
+import { RadioButton, Avatar } from "react-native-paper";
 import Header from "../../components/Header";
 import colors from "../../constants/colours";
 //import DateTimePickerModal from "react-native-modal-datetime-picker"
@@ -36,7 +37,7 @@ const FAB = (props) => {
         bottom: props.onBoarding ? 10 : 30,
         borderRadius: props.onBoarding ? 10 : 50,
         backgroundColor: props.onBoarding ? colors.primary : colors.primary,
-        height: props.onBoarding ?50:60,
+        height: props.onBoarding ? 50 : 60,
         justifyContent: "center",
         alignContent: "center",
       }}
@@ -45,7 +46,7 @@ const FAB = (props) => {
         {!props.onBoarding ? (
           <>
             {props.editeMode && props.loading ? (
-              <ActivityIndicator size={14} animating={true} color={colors.white}/>
+              <ActivityIndicator size={14} animating={true} color={colors.white} />
             ) : (
               <Image
                 style={{ ...styles.title }}
@@ -62,15 +63,15 @@ const FAB = (props) => {
             style={{
               display: "flex",
               flexDirection: "row",
-              justifyContent:'center',
-              alignContent:'center',
-              gap:15
+              justifyContent: 'center',
+              alignContent: 'center',
+              gap: 15
             }}
           >
             <Text style={{ color: colors.white, fontSize: 20 }}>
               Commencez
             </Text>
-            <ArrowRight style={{marginTop:3}} size={25} color={colors.white}/>
+            <ArrowRight style={{ marginTop: 3 }} size={25} color={colors.white} />
           </TouchableOpacity>
         )}
       </TouchableOpacity>
@@ -93,6 +94,7 @@ export const CustomeFab = (props) => {
 };
 
 const MonProfile2 = ({ userInfos, loading, ImageLoading }) => {
+   const {height, width} = Dimensions.get("screen")
   const [user, setUser] = useState(null);
   const [gender, setGender] = useState(1);
   const [editeMode, setEditeMode] = useState(true);
@@ -104,7 +106,7 @@ const MonProfile2 = ({ userInfos, loading, ImageLoading }) => {
     email: user?.email,
     surname: user?.surname,
     telephone: user?.telephone,
-    birthdate: moment(user?.birthdate).format("YYYY-MM-DD"),
+    birthdate: user?.birthdate ? moment(user?.birthdate).format("YYYY-MM-DD") : null,
   });
 
   const [errors, setErrors] = useState({
@@ -168,7 +170,7 @@ const MonProfile2 = ({ userInfos, loading, ImageLoading }) => {
         surname: userInfos.user.surname,
         email: userInfos.user.email,
         telephone: userInfos.user.telephone,
-        birthdate: moment(userInfos.user.birthdate).format("YYYY-MM-DD"),
+        birthdate: userInfos.user.birthdate ? moment(userInfos.user.birthdate).format("YYYY-MM-DD") : null,
       });
     }
   }, [userInfos]);
@@ -188,33 +190,36 @@ const MonProfile2 = ({ userInfos, loading, ImageLoading }) => {
     });
 
     if (!result.canceled) {
+      console.log("img here")
       setImage(result.assets[0].uri);
       dispatch(userSetProfile(result.assets[0], user._id));
+    }else{
+      console.log("img canceled")
     }
   };
 
   return (
     <KeyboardAvoidingView
-      //behavior={Platform.OS === "ios" ? "padding" : "height"}
-      style={{ flex: 1 }}
+      style={{ flex: 1}}
+    //behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
-      <View flex={1} style={{ backgroundColor: "white" }}>
-        <View height={50}>
+      <View flex={1} style={{ backgroundColor: "white",  }}>
+        <View height={50} marginBottom={20}>
           <Header title={"Vos informations"} />
         </View>
         <ScrollView
-          style={{ padding: 10 }}
+          style={{ marginTop: 5, padding:10, width: width, height }}
           showsVerticalScrollIndicator={false}
         >
           <View>
-            <TouchableOpacity onPress={selectImage}>
+            <TouchableOpacity onPress={selectImage} style={{position: "relative"}}>
               <View style={styles.viewStyle}>
-                <Avatar.Image size={95} source={{uri:ImageLoading ? image : "https://www.ucf.edu/wp-content/blogs.dir/19/files/2019/12/Hospitality-Professional-At-Work-web.jpg" ?? image}} />
+                <Avatar.Image style={{backgroundColor: colors.primary}}  size={95} source={{ uri: ImageLoading ? image : userInfos?.user?.photo || "https://www.ucf.edu/wp-content/blogs.dir/19/files/2019/12/Hospitality-Professional-At-Work-web.jpg" }} />
                 <View style={styles.iconCam}>
                   {ImageLoading ? (
-                    <ActivityIndicator color={colors.primary} size={14}/>
+                    <ActivityIndicator color={colors.primary} size={14} />
                   ) : (
-                    <Camera color={colors.primary} variant="Bold" size={12}/>
+                    <Camera color={colors.primary} variant="Bold" size={12} />
                   )}
                 </View>
               </View>
@@ -235,11 +240,11 @@ const MonProfile2 = ({ userInfos, loading, ImageLoading }) => {
                 <TextInput
                   style={{
                     ...styles.input,
-                    borderWidth: !editeMode ? 1 : 2,
-                    backgroundColor: !editeMode && colors.desable,
+                    borderWidth: !editeMode ? 1 : 1,
+                    backgroundColor: !editeMode && colors.bg_grey,
                     borderRadius: !editeMode ? 50 : 15,
                     borderColor: !editeMode ? colors.desable : "#F0F0F0",
-                    color: !editeMode ? colors.text_grey_hint : colors.black,
+                    color: !editeMode ? colors.black : colors.black,
                   }}
                   placeholder="Modifier votre nom"
                   keyboardType="default"
@@ -258,11 +263,11 @@ const MonProfile2 = ({ userInfos, loading, ImageLoading }) => {
                 <TextInput
                   style={{
                     ...styles.input,
-                    borderWidth: !editeMode ? 1 : 2,
-                    backgroundColor: !editeMode && colors.desable,
+                    borderWidth: !editeMode ? 1 : 1,
+                    backgroundColor: !editeMode && colors.bg_grey,
                     borderRadius: !editeMode ? 50 : 15,
                     borderColor: !editeMode ? colors.desable : "#F0F0F0",
-                    color: !editeMode ? colors.text_grey_hint : colors.black,
+                    color: !editeMode ? colors.black : colors.black,
                   }}
                   onChangeText={(value) => handleInputChange("surname", value)}
                   value={formData.surname}
@@ -281,11 +286,11 @@ const MonProfile2 = ({ userInfos, loading, ImageLoading }) => {
                     placeholderTextColor={colors.text_grey_hint}
                     style={{
                       ...styles.input,
-                      borderWidth: !editeMode ? 1 : 2,
-                      backgroundColor: !editeMode && colors.desable,
+                      borderWidth: !editeMode ? 1 : 1,
+                      backgroundColor: !editeMode && colors.bg_grey,
                       borderRadius: !editeMode ? 50 : 15,
                       borderColor: !editeMode ? colors.desable : "#F0F0F0",
-                      color: !editeMode ? colors.text_grey_hint : colors.black,
+                      color: !editeMode ? colors.black : colors.black,
                     }}
                     placeholder="17 Decembre 2004"
                     underlineColor="transparent"
@@ -299,16 +304,16 @@ const MonProfile2 = ({ userInfos, loading, ImageLoading }) => {
                     editable={!editeMode}
                   />
                 ) : (
-                  <TouchableOpacity  onPress={showDatePickerModal}>
+                  <TouchableOpacity onPress={showDatePickerModal}>
                     <Text
                       style={{
                         ...styles.textInput,
                         color: !editeMode
-                          ? colors.text_grey_hint
+                          ? colors.black
                           : colors.black,
                       }}
                     >
-                      {moment(formData.birthdate).format("YYYY-MM-DD")}
+                      {formData.birthdate ? moment(formData.birthdate).format("YYYY-MM-DD") : null}
                     </Text>
                   </TouchableOpacity>
                 )}
@@ -344,8 +349,8 @@ const MonProfile2 = ({ userInfos, loading, ImageLoading }) => {
                     <View
                       style={{
                         ...styles.boxRadio,
-                        borderWidth: !editeMode ? 1 : 2,
-                        backgroundColor: !editeMode && colors.desable,
+                        borderWidth: !editeMode ? 1 : 1,
+                        backgroundColor: !editeMode && colors.bg_grey,
                         borderRadius: !editeMode ? 50 : 15,
                         borderColor: !editeMode ? colors.desable : "#F0F0F0",
                       }}
@@ -359,15 +364,15 @@ const MonProfile2 = ({ userInfos, loading, ImageLoading }) => {
                         onPress={() => handleGenderChange(1)}
                         disabled={editeMode}
                       />
-                      <Text onPress={()=>handleGenderChange(1)} style={{ fontSize: 16, color: "#343434" }}>
+                      <Text onPress={() => handleGenderChange(1)} style={{ fontSize: 16, color: "#343434" }}>
                         Homme
                       </Text>
                     </View>
                     <View
                       style={{
                         ...styles.boxRadio,
-                        borderWidth: !editeMode ? 1 : 2,
-                        backgroundColor: !editeMode && colors.desable,
+                        borderWidth: !editeMode ? 1 : 1,
+                        backgroundColor: !editeMode && colors.bg_grey,
                         borderRadius: !editeMode ? 50 : 15,
                         borderColor: !editeMode ? colors.desable : "#F0F0F0",
                       }}
@@ -381,7 +386,7 @@ const MonProfile2 = ({ userInfos, loading, ImageLoading }) => {
                         onPress={() => handleGenderChange(0)}
                         disabled={editeMode}
                       />
-                      <Text onPress={()=>handleGenderChange(0)} style={{ fontSize: 16, color: "#343434" }}>
+                      <Text onPress={() => handleGenderChange(0)} style={{ fontSize: 16, color: "#343434" }}>
                         Femme
                       </Text>
                     </View>
@@ -405,11 +410,11 @@ const MonProfile2 = ({ userInfos, loading, ImageLoading }) => {
                   <TextInput
                     style={{
                       ...styles.input,
-                      borderWidth: !editeMode ? 1 : 2,
-                      backgroundColor: !editeMode && colors.desable,
+                      borderWidth: !editeMode ? 1 : 1,
+                      backgroundColor: !editeMode && colors.bg_grey,
                       borderRadius: !editeMode ? 50 : 15,
                       borderColor: !editeMode ? colors.desable : "#F0F0F0",
-                      color: !editeMode ? colors.text_grey_hint : colors.black,
+                      color: !editeMode ? colors.black : colors.black,
                     }}
                     onChangeText={(value) => handleInputChange("email", value)}
                     value={formData.email}
@@ -425,11 +430,11 @@ const MonProfile2 = ({ userInfos, loading, ImageLoading }) => {
                   <TextInput
                     style={{
                       ...styles.input,
-                      borderWidth: !editeMode ? 1 : 2,
-                      backgroundColor: !editeMode && colors.desable,
+                      borderWidth: !editeMode ? 1 : 1,
+                      backgroundColor: !editeMode && colors.bg_grey,
                       borderRadius: !editeMode ? 50 : 15,
                       borderColor: !editeMode ? colors.desable : "#F0F0F0",
-                      color: !editeMode ? colors.text_grey_hint : colors.black,
+                      color: !editeMode ? colors.black : colors.black,
                     }}
                     placeholder="+237658686162"
                     underlineColor="transparent"

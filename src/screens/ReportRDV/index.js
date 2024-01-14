@@ -131,7 +131,7 @@ export const ReportRDV = ({ route, navigation }) => {
   }, [errorOnPut, successOnPut]);
 
   return (
-    <View flex={1}>
+    <View flex={1} marginTop={10}>
       <ScrollView
         ref={scrollViewRef}
         nestedScrollEnabled={true}
@@ -146,16 +146,6 @@ export const ReportRDV = ({ route, navigation }) => {
         style={{ padding: 8 }}
       >
         <View style={{ gap: 8 }}>
-          <CardInfo
-            lieu={appointment?.lieu?.label}
-            patient={
-              appointment?.patient?.name + " " + appointment?.patient?.surname
-            }
-            motif={appointment?.motif}
-            infos={"23 ans, 85Kg, Homme"}
-            status={appointment?.status}
-            date={appointment?.displayedDate}
-          />
           <View style={{ ...styles.secondCard, gap: 6, padding: 10 }}>
             <View style={{ ...styles.secondCardSection1 }}>
               <View style={{ ...styles.masquerBox }}>
@@ -164,13 +154,6 @@ export const ReportRDV = ({ route, navigation }) => {
                 </View>
                 <Text>Masquer</Text>
               </View>
-              <Text
-                style={{
-                  color: colors.yellow,
-                }}
-              >
-                Choisir un autre centre
-              </Text>
             </View>
             <View style={{ ...styles.secondCardSection2 }}>
               <View
@@ -209,7 +192,7 @@ export const ReportRDV = ({ route, navigation }) => {
                 <SelectDropdown
                   data={dayOfWeek}
                   onSelect={(selectedItem, index) => {
-                    setCreneau(selectedItem);
+                    setDay(goFromDayToNumber(selectedItem));
                     console.log(selectedItem, index);
                   }}
                   buttonTextAfterSelection={(selectedItem, index) => {
@@ -218,9 +201,13 @@ export const ReportRDV = ({ route, navigation }) => {
                   rowTextForSelection={(item, index) => {
                     return item;
                   }}
+                  buttonTextStyle={{
+                    fontSize: 15
+                  }}
                   buttonStyle={{
                     borderRadius: 10,
                     height: 30,
+                    fontSize: 10,
                     width:"100%",
                     borderColor: colors.text_grey_hint,
                     borderWidth: 1,
@@ -245,6 +232,12 @@ export const ReportRDV = ({ route, navigation }) => {
                   }}
                   rowTextForSelection={(item, index) => {
                     return item;
+                  }}
+                  rowTextStyle={{
+                    fontSize:15
+                  }}
+                  buttonTextStyle={{
+                    fontSize: 15
                   }}
                   buttonStyle={{
                     borderRadius: 10,
@@ -282,6 +275,8 @@ export const ReportRDV = ({ route, navigation }) => {
                         <View
                           ml={index !== 0 ? 2 : 0}
                           style={{
+                            marginRight: 10,
+                            marginBottom: 5,
                             ...styles.jourRdvBox,
                             borderColor:
                               selectedDay === d
@@ -301,9 +296,9 @@ export const ReportRDV = ({ route, navigation }) => {
                     ))}
                   </View>
                 </ScrollView>
-                <Text style={{ ...styles.rdvHoureLabel }}>
+                {selectedDay && <Text style={{ ...styles.rdvHoureLabel }}>
                   Heure du rendez-vous
-                </Text>
+                </Text>}
                 {selectedHours?.length > 0 ? (
                   <View style={styles.hstackBox}>
                     <View mr={1.5} style={{ ...styles.arrowScrollView }}>
@@ -328,6 +323,7 @@ export const ReportRDV = ({ route, navigation }) => {
                             <View
                               ml={index !== 0 ? 2 : 0}
                               style={{
+                                marginRight: 5,
                                 ...styles.hourRdvBox,
                                 borderColor:
                                   selectedHour === d?.start
@@ -386,7 +382,11 @@ export const ReportRDV = ({ route, navigation }) => {
             disabled={putingRdv || !selectedDay || !selectedHour || !repordDate}
             style={{
               ...styles.btnSubmitPut,
-              backgroundColor: colors.primary,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              backgroundColor: (putingRdv || !selectedDay || !selectedHour || !repordDate) ? "gray" : colors.primary,
             }}
           >
             <Text

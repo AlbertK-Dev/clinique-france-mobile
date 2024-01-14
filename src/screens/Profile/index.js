@@ -44,7 +44,7 @@ function Profile() {
       <View style={{ ...styles.section1 }}>
         <View style={{ ...styles.section2of1 }}>
           <UserAvatar
-            uri={"https://www.ucf.edu/wp-content/blogs.dir/19/files/2019/12/Hospitality-Professional-At-Work-web.jpg"}
+            uri={user?.user?.photo || "https://www.ucf.edu/wp-content/blogs.dir/19/files/2019/12/Hospitality-Professional-At-Work-web.jpg"}
             name={user?.user?.name ?? ""}
             email={user?.user?.email ?? ""}
           />

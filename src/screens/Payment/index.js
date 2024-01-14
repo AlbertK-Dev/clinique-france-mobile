@@ -12,6 +12,7 @@ import Header from "../../components/Header";
 import colors from "../../constants/colours";
 import { setShouldSeeBehind } from "../../redux/commons/action";
 import { postRDV } from "../../redux/RDV/actions";
+import * as SCREENS from "../../constants/screens";
 import styles from "./style";
 import { Alert } from "react-native";
 
@@ -97,6 +98,7 @@ const Payment = ({ route, navigation }) => {
     setIsLoading(true);
     payload = !ext ? { ...formRDV, ...userInfo } : { ...extPRData };
     dispatch(postRDV(payload));
+   // navigation.navigate(SCREENS.SUCCESS, { ext: false });
   };
 
   const determineOperateur = (numero) => {
@@ -313,6 +315,7 @@ const Payment = ({ route, navigation }) => {
         {renderPaymentForm() && (
           <View flex={1} style={styles.btnBox}>
             <PrimaryButton
+            textColor="white"
               disabled={
                 operateur === "inconnu" || operateur !== selectedPaymentMethod
               }
@@ -323,6 +326,7 @@ const Payment = ({ route, navigation }) => {
               }
               isLoadingText="en cours de chargement..."
               isLoading={loadingPostRdv}
+              
               style={{
                 ...styles.submitBtnText,
                 backgroundColor:

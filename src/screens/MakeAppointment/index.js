@@ -6,6 +6,7 @@ import { View, ScrollView } from "react-native";
 import colors from "../../constants/colours";
 import {
   ArrowLeft,
+  ArrowRight,
   CloseCircle,
   SearchNormal1,
 } from "iconsax-react-native";
@@ -56,8 +57,9 @@ const HeaderBox = ({ number, title, hintText, error }) => {
 };
 
 const MakeAppointment = ({ navigation, route }) => {
+ // const {height} = Dimensions.get("screen")
   const scrollViewRef = React.useRef();
-  const isProfession = useSelector((state) => state.Common.isProfession);
+//  const isProfession = useSelector((state) => state.Common.isProfession);
   const idCentre = useSelector((state) => state.Common.idc);
   const [actualDayCreneaux, setActualDayCreneau] = useState([]);
   const RDVForm = useSelector((state) => state.RdvForm.rdvForm);
@@ -72,7 +74,7 @@ const MakeAppointment = ({ navigation, route }) => {
   const dispoLoading = useSelector((state) => state.RdvForm.dispoLoading);
   const dispo = useSelector((state) => state.RdvForm.dispo);
   const motifs = useSelector((state) => state.RdvForm.motifs);
-  const specialities = useSelector((state) => state.RdvForm.specialities);
+  const specialities = useSelector((state) => state.Common.specialties);
   const cliniques = useSelector((state) => state.RdvForm.cliniques);
   const praticiens = useSelector((state) => state.RdvForm.praticiens);
   // const selectedProfession = isProfession ? professions.
@@ -91,11 +93,7 @@ const MakeAppointment = ({ navigation, route }) => {
   });
 
   const handleStepNumber = (n) => {
-    if (isProfession === false) {
-      return n - 1;
-    } else {
       return n;
-    }
   };
 
   const handleChange = (trigger, value) => {
@@ -118,7 +116,7 @@ const MakeAppointment = ({ navigation, route }) => {
           })
         );
         formData?.motif != value && dispatch(setMotifDuration(value));
-        formData?.motif != value && dispatch(getClinique(value));
+        formData?.motif != value && dispatch(getPraticiens(formData.speciality));
         break;
       case "praticien":
         setFormData({
@@ -230,9 +228,9 @@ const MakeAppointment = ({ navigation, route }) => {
     );
     return setShouldSeeBehindToFalse;
   }, [navigation]);
-
+  console.log(formData)
   return (
-    <View bgColor={colors.white} flex={1} style={styles.container}>
+    <View bgColor={colors.white} flex={1} style={{...styles.container, marginTop: 20}}>
       {/* Header */}
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Nouveau rendez-vous</Text>
@@ -242,7 +240,7 @@ const MakeAppointment = ({ navigation, route }) => {
             dispatch(setShouldSeeBehind(false));
           }}
           size={26}
-          color={colors.black}
+          color={colors.primary}
         />
       </View>
       <ScrollView
@@ -260,7 +258,7 @@ const MakeAppointment = ({ navigation, route }) => {
         borderColor={"red"}
         mb={2}
       >
-        {shouldSeeBehind && isProfession === true && (
+        {(
           <View mt={5} style={styles.card}>
             {specialityLoading ? (
               <LoadingSelectComponent />
@@ -273,7 +271,7 @@ const MakeAppointment = ({ navigation, route }) => {
                     "Sélectionnez une specialité pour votre rendez-vous"
                   }
                 />
-                <View style={styles.inputBox}>
+                <View style={{...styles.inputBox, marginBottom: 10}}>
                   <View>
                     <SelectList
                       setSelected={(val) => {
@@ -286,7 +284,7 @@ const MakeAppointment = ({ navigation, route }) => {
                       placeholder="choisir une specialité"
                       boxStyles={{
                         borderRadius: 10,
-                        backgroundColor: colors.desable,
+                        backgroundColor: colors.bg_grey,
                         borderWidth: 0,
                       }}
                       dropdownStyles={{
@@ -296,7 +294,7 @@ const MakeAppointment = ({ navigation, route }) => {
                       }}
                       notFoundText={"Aucune specialité trouvée"}
                       searchPlaceholder={"Recherche"}
-                      searchicon={<SearchNormal1 color={colors.primary} />}
+                      searchicon={<SearchNormal1 marginRight={5} color={colors.primary} />}
                     />
                   </View>
                 </View>
@@ -305,9 +303,7 @@ const MakeAppointment = ({ navigation, route }) => {
           </View>
         )}
 
-        {shouldSeeBehind &&
-          ((isProfession === true && formData.speciality) ||
-            isProfession === false) && (
+        { (formData.speciality) && (
             <View mt={5} style={styles.card}>
               {motifsLoading ? (
                 <LoadingSelectComponent />
@@ -323,14 +319,14 @@ const MakeAppointment = ({ navigation, route }) => {
                         : "Aucun motif ne corresponds à vos choix"
                     }
                   />
-                  <View style={styles.inputBox}>
+                  <View style={{...styles.inputBox, marginBottom: 10}}>
                     <View>
                       {motifs?.length > 0 && (
                         <SelectList
                           setSelected={(val) => {
                             handleChange("motif", val);
                           }}
-                          placeholder="choisir un motif"
+                          placeholder="Choisir un motif"
                           data={motifs?.map((e) => {
                             return { key: e._id, value: e.label };
                           })}
@@ -338,7 +334,7 @@ const MakeAppointment = ({ navigation, route }) => {
                           boxStyles={{
                             borderRadius: 10,
                             borderWidth: 0,
-                            backgroundColor: colors.desable,
+                            backgroundColor: colors.bg_grey,
                           }}
                           dropdownStyles={{
                             borderRadius: 10,
@@ -347,7 +343,7 @@ const MakeAppointment = ({ navigation, route }) => {
                           }}
                           notFoundText={"Aucun motif trouvé"}
                           searchPlaceholder={"Recherche"}
-                          searchicon={<SearchNormal1 color={colors.primary} />}
+                          searchicon={<SearchNormal1 marginRight={5} color={colors.primary} />}
                         />
                       )}
                     </View>
@@ -402,9 +398,8 @@ const MakeAppointment = ({ navigation, route }) => {
             </View>
                       ))} */}
 
-        {(isProfession === true && formData.lieu) ||
-          (isProfession === false && formData.lieu && (
-            <View>
+        {((formData.motif &&
+            <View style={{marginBottom: 10}}>
               <View mt={5} style={styles.card}>
                 {praticiensLoading ? (
                   <LoadingItemsComponents />
@@ -463,7 +458,7 @@ const MakeAppointment = ({ navigation, route }) => {
                         : "Aucune disponibilité pour vos choix"
                     }
                   />
-                  <View style={styles.inputBox}>
+                  <View style={{...styles.inputBox}}>
                     <ScrollView
                       showsHorizontalScrollIndicator={false}
                       horizontal={true}
@@ -471,11 +466,14 @@ const MakeAppointment = ({ navigation, route }) => {
                       {generateKeyTab(dispo).map((d, index) => {
                         return (
                           <Pressable
-                            onPress={() => handleChange("day", d)}
+                            onPress={() => {
+                              handleChange("day", d)
+                            }}
                             key={d}
                           >
                             <View
                               ml={index !== 0 ? 2 : 0}
+                              marginBottom={15}
                               style={{
                                 ...styles.period,
                                 borderColor:
@@ -492,7 +490,7 @@ const MakeAppointment = ({ navigation, route }) => {
                                 style={{
                                   ...styles.periodText,
                                   color:
-                                    formData.period.day === d?.id
+                                    formData.period.day === d
                                       ? colors.primary
                                       : colors.black,
                                 }}
@@ -515,7 +513,7 @@ const MakeAppointment = ({ navigation, route }) => {
                           }}
                         >
                           <View style={styles.prev}>
-                            <ArrowLeft color={colors.primary} />
+                            <ArrowLeft size={15} color={colors.primary} />
                           </View>
                           <ScrollView
                             showsHorizontalScrollIndicator={false}
@@ -559,7 +557,6 @@ const MakeAppointment = ({ navigation, route }) => {
                                     >
                                       <Text
                                         style={{
-                                          ...styles.periodText,
                                           color:
                                             formData.period.time === d.start
                                               ? colors.primary
@@ -575,7 +572,7 @@ const MakeAppointment = ({ navigation, route }) => {
                             </View>
                           </ScrollView>
                           <View ml={1.5} style={styles.prev}>
-                            <ArrowLeft color={colors.primary} />
+                            <ArrowRight size={15} color={colors.primary} />
                           </View>
                         </View>
                       </View>
@@ -600,12 +597,6 @@ const MakeAppointment = ({ navigation, route }) => {
       >
         <Text style={{ color: colors.white, fontSize: 18 }}>Valider</Text>
       </Button>
-      {
-        <ModaleChoixProfession
-          navigation={navigation}
-          onClose={() => dispatch(setShouldSeeBehind(false))}
-        />
-      }
     </View>
   );
 };

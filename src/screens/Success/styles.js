@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
   contenair: {
     flex: 1,
     flexDirection: "column",
-    paddingHorizontal:30,
+    paddingHorizontal:15,
     justifyContent:"center",
     backgroundColor:colors.white
   },
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     display:"flex",
     flexDirection:"row"
   },
-  btn: { backgroundColor: colors.white, borderRadius: 10, marginBottom: 10, width: "100%" }
+  btn: { backgroundColor: colors.white, borderRadius: 10, marginBottom: 10, width: "100%", height: 50, display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }
 });
 
 export default styles;
